@@ -1,5 +1,5 @@
 // MOAFIT 서비스 워커: 앱 껍데기는 캐시, 상품 데이터는 항상 최신을 먼저 시도
-const VER = 'moafit-v1';
+const VER = 'moafit-v2';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {

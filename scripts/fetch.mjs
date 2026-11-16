@@ -26,12 +26,12 @@ const TODAY = new Date().toISOString().slice(0, 10);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ───────────────────────── 네트워크
-async function get(url, { json = false, tries = 2, timeout = 25000 } = {}) {
+async function get(url, { json = false, tries = 2, timeout = 25000, cookie = '' } = {}) {
   let lastErr;
   for (let n = 0; n < tries; n++) {
     try {
       const res = await fetch(url, {
-        headers: { 'User-Agent': UA, Accept: json ? 'application/json' : 'text/plain,*/*' },
+        headers: { 'User-Agent': UA, Accept: json ? 'application/json' : 'text/html,text/plain,*/*', ...(cookie ? { Cookie: cookie } : {}) },
         redirect: 'follow',
         signal: AbortSignal.timeout(timeout),
       });
@@ -326,40 +326,71 @@ async function fetchStore(store, cfg, fx) {
     return [status, keepPrev('error', `robots.txt 확인 실패: ${e.message}`)];
   }
 
-  // 2) 스토어 기본 정보(통화) — 없으면 설정값 사용
-  let currency = store.currency || '';
+  // 2) 상품 목록 첫 장으로 수집 가능 여부 확인
+  const page = async (n, limit, cookie) => {
+    const r = await get(`${base}/products.json?limit=${limit}&page=${n}`, { json: true, cookie });
+    if (!r.ok) return { fail: 'blocked', note: `products.json HTTP ${r.status}` };
+    if (!(r.headers.get('content-type') || '').includes('json')) return { fail: 'unsupported', note: '상품 JSON을 제공하지 않는 스토어' };
+    return { list: (await r.json())?.products || [] };
+  };
+  const firstPrices = (list) => {
+    const m = new Map();
+    for (const p of list) { const v = (p.variants || [])[0]; if (v && num(v.price) > 0) m.set(p.id, { n: num(v.price), dec: /\.\d/.test(String(v.price)) }); }
+    return m;
+  };
+  let probe;
+  try { probe = await page(1, 12, ''); } catch (e) { return [status, keepPrev('error', `수집 실패: ${e.message}`)]; }
+  if (probe.fail) return [status, keepPrev(probe.fail, probe.note)];
+
+  // 3) 가격이 어떤 통화로 오는지 판별
+  //    같은 스토어라도 접속 국가에 따라 통화가 달라진다. 한국 기준(localization=KR)으로 요청해서
+  //    원화 가격을 주는 스토어는 그 값을 그대로 쓰고, 아니면 스토어 통화를 환율로 바꾼다.
+  let metaCur = store.currency || '';
   try {
     const r = await get(`${base}/meta.json`, { json: true, tries: 1, timeout: 15000 });
-    if (r.ok) {
-      const m = await r.json();
-      if (m?.currency) currency = m.currency;
-    }
+    if (r.ok) { const m = await r.json(); if (m?.currency) metaCur = m.currency; }
   } catch { /* 설정값 사용 */ }
-  if (!currency) currency = 'USD';
+  const p0 = firstPrices(probe.list);
+  const anyDec = [...p0.values()].some((x) => x.dec);
+  let baseCur = metaCur || 'USD';
+  if (baseCur !== 'USD') {
+    try {
+      const r = await get(`${base}/`, { tries: 1, timeout: 20000 });
+      const cur = r.ok ? (await r.text()).match(/Shopify\.currency\s*=\s*\{\s*"active"\s*:\s*"([A-Z]{3})"/)?.[1] : '';
+      if (cur) baseCur = cur;
+    } catch { /* 스토어 기본 통화로 가정 */ }
+    if ((baseCur === 'KRW' || baseCur === 'JPY') && anyDec) baseCur = 'USD'; // 소수점 가격은 원·엔이 아님
+  }
+  let cookie = '', currency = baseCur, ctx = 'base';
+  try {
+    await sleep(400);
+    const kr = await page(1, 12, 'localization=KR');
+    if (kr.list) {
+      const pk = firstPrices(kr.list);
+      const ratios = [...pk.entries()].filter(([id]) => p0.has(id)).map(([id, v]) => v.n / p0.get(id).n).sort((a, b) => a - b);
+      const med = ratios.length >= 3 ? ratios[ratios.length >> 1] : 0;
+      const krDec = [...pk.values()].some((x) => x.dec);
+      const fxBase = fx.rates[baseCur] || FX_FALLBACK[baseCur] || 0;
+      if (baseCur === 'KRW' && pk.size) { cookie = 'localization=KR'; currency = 'KRW'; ctx = 'KR'; }
+      else if (med && !krDec && fxBase >= 5 && med > fxBase * 0.5 && med < fxBase * 2.2) { cookie = 'localization=KR'; currency = 'KRW'; ctx = 'KR'; }
+      else if (med > 0.6 && med < 1.4) { cookie = 'localization=KR'; currency = baseCur; ctx = 'KR-same'; }
+    }
+  } catch { /* 기본 통화로 진행 */ }
   const rate = fx.rates[currency] || FX_FALLBACK[currency] || 0;
   if (!rate) return [status, keepPrev('error', `환율을 모르는 통화: ${currency}`)];
   status.currency = currency;
+  status.ctx = ctx;
 
-  // 3) 상품 목록
+  // 4) 상품 목록
   const max = store.max || cfg.maxProductsPerStore || 1200;
   const raw = [];
   try {
-    for (let page = 1; page <= Math.ceil(max / 250) + 1 && raw.length < max; page++) {
-      const r = await get(`${base}/products.json?limit=250&page=${page}`, { json: true });
-      if (!r.ok) {
-        if (page === 1) return [status, keepPrev('blocked', `products.json HTTP ${r.status}`)];
-        break;
-      }
-      const ct = r.headers.get('content-type') || '';
-      if (!ct.includes('json')) {
-        if (page === 1) return [status, keepPrev('unsupported', '상품 JSON을 제공하지 않는 스토어')];
-        break;
-      }
-      const j = await r.json();
-      const list = j?.products || [];
-      raw.push(...list);
-      if (list.length < 250) break;
+    for (let n = 1; n <= Math.ceil(max / 250) + 1 && raw.length < max; n++) {
       await sleep(cfg.delayMs ?? 1200);
+      const r = await page(n, 250, cookie);
+      if (r.fail) { if (n === 1) return [status, keepPrev(r.fail, r.note)]; break; }
+      raw.push(...r.list);
+      if (r.list.length < 250) break;
     }
   } catch (e) {
     return [status, keepPrev('error', `수집 실패: ${e.message}`)];
@@ -424,7 +455,7 @@ async function main() {
       total += status.count;
     }
     report.push(status);
-    console.log(`${status.state.padEnd(11)} ${String(status.count).padStart(5)}  ${store.id}  ${((Date.now() - t0) / 1000).toFixed(1)}s  ${status.note || ''}`);
+    console.log(`${status.state.padEnd(11)} ${String(status.count).padStart(5)}  ${store.id}  ${status.currency || '-'}/${status.ctx || '-'}  ${((Date.now() - t0) / 1000).toFixed(1)}s  ${status.note || ''}`);
     await sleep(cfg.delayMs ?? 1200);
   }
   const meta = { updated: new Date().toISOString(), total, fxLive: fx.live, stores: report };

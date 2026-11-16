@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MOAFIT</title>
-<meta name="description" content="여러 스토어의 옷을 한곳에 모아, 내 사이즈와 취향 순으로 보여주는 개인 셀렉트샵">
+<meta name="description" content="무신사·크림에서 고른 옷을 한곳에 모으고, 한 장의 보드로 정리하는 개인 옷 모음">
 <meta name="theme-color" content="#F6F6F3">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -25,7 +25,7 @@
   --tab:58px; --sab:env(safe-area-inset-bottom,0px); --sat:env(safe-area-inset-top,0px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+html{-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--f);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;word-break:keep-all;overflow-wrap:anywhere;padding-bottom:calc(var(--tab) + var(--sab) + 24px)}
 body.lock{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -37,75 +37,70 @@ img{display:block;max-width:100%}
 .wrap{max-width:1240px;margin:0 auto;padding:0 14px}
 .hide{display:none!important}
 
-/* 상단 */
 .top{position:sticky;top:0;z-index:20;background:var(--paper);padding-top:var(--sat);border-bottom:1px solid var(--ink)}
 .top .wrap{display:flex;align-items:baseline;justify-content:space-between;height:50px;padding-top:12px}
 .mark{font:700 23px/1 var(--fc);letter-spacing:-.01em;text-decoration:none}
 .stamp{font-size:12px;color:var(--ink2)}
 
-/* 하단 탭 */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--ink);padding-bottom:var(--sab)}
-.tabs ul{list-style:none;display:flex;max-width:560px;margin:0 auto;height:var(--tab)}
+.tabs ul{list-style:none;display:flex;max-width:520px;margin:0 auto;height:var(--tab)}
 .tabs li{flex:1}
 .tabs a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:100%;text-decoration:none;font-size:11px;font-weight:500;color:var(--ink3);position:relative}
 .tabs a svg{width:23px;height:23px}
 .tabs a[aria-current=page]{color:var(--ink)}
-.tabs a[aria-current=page]::before{content:"";position:absolute;top:-1px;left:22%;right:22%;height:3px;background:var(--cobalt)}
+.tabs a[aria-current=page]::before{content:"";position:absolute;top:-1px;left:24%;right:24%;height:3px;background:var(--cobalt)}
 .tabs .cnt{position:absolute;top:7px;left:calc(50% + 7px);min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--ink);color:#fff;font:600 10px/16px var(--fc);text-align:center}
-
 svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.ic.s{width:16px;height:16px}
 
-/* 제목류 */
 .lead{font-weight:700;font-size:25px;line-height:1.28;letter-spacing:-.025em;padding:22px 0 14px;max-width:24em;text-wrap:balance}
-.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:26px 0 12px}
-.sec h2{font-size:17px;font-weight:700;letter-spacing:-.02em}
-.sec .more{font-size:13px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
 .note{font-size:13px;color:var(--ink2)}
 
-/* 사이즈 스트립 — 새 옷에 붙는 사이즈 스티커 */
-.strip{display:flex;width:100%;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:var(--card);overflow:hidden;height:38px;align-items:stretch}
-.strip .seg{display:flex;align-items:center;gap:12px;padding:0 12px;border-right:1px solid var(--ink);white-space:nowrap;flex:1 1 0;min-width:0;overflow:hidden}
-.strip .seg:last-child{border-right:0}
-.strip .seg i{font-style:normal;font-size:11px;color:var(--ink2);flex:none}
-.strip .seg b{font:700 17px/1 var(--fc);flex:none}
-.strip .seg b + b{opacity:.28}
-.strip.empty{align-items:center;justify-content:space-between;padding:0 12px;font-size:13px}
-.strip.empty u{text-underline-offset:3px;font-weight:600}
+/* 통합 검색 + 담기 */
+.find{border:1px solid var(--ink);border-radius:4px;background:var(--card);padding:12px;margin-top:16px}
+.find .chips{margin:10px -12px 0;padding:0 12px}
+.find .hint{font-size:12.5px;color:var(--ink2);margin-top:9px}
 
-/* 상품 그리드 */
+/* 모음: 핀터레스트식 격자 */
+.masonry{display:flex;gap:10px;align-items:flex-start}
+.mcol{flex:1;min-width:0;display:flex;flex-direction:column;gap:18px}
+.pin2{min-width:0}
+.pimg{display:block;width:100%;background:var(--photo);border-radius:3px;overflow:hidden;position:relative;min-height:110px}
+.pimg img{width:100%;height:auto;mix-blend-mode:multiply}
+.pimg.fix img{height:100%;object-fit:cover}
+.mtag{position:absolute;left:6px;top:6px;font:700 10.5px/1 var(--fc);padding:4px 6px;border-radius:2px;background:var(--card);letter-spacing:.01em}
+.mtag.mu{background:var(--ink);color:#fff}
+.mtag.kr{background:var(--card);border:1px solid var(--ink)}
+.mtag.st{background:var(--cobalt);color:#fff}
+
+/* 스토어 상품 격자 */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 10px}
 @media(min-width:620px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 14px}}
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:1160px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-left:14px;margin:0 -14px;padding:0 14px 4px;scrollbar-width:none}
-.rail::-webkit-scrollbar{display:none}
-.rail .card{flex:0 0 150px;scroll-snap-align:start}
-
 .card{position:relative;min-width:0}
 .ph{display:block;width:100%;aspect-ratio:4/5;background:var(--photo);border-radius:3px;overflow:hidden;position:relative}
 .ph img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
 .ph.gone img{opacity:.45}
 .badges{position:absolute;left:6px;top:6px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;pointer-events:none}
-.bd{font:700 11px/1 var(--fc);padding:4px 6px;border-radius:2px;background:var(--card);letter-spacing:.01em}
-.bd.new{background:var(--sticker);transform:rotate(-3deg)}
-.bd.sale{background:var(--drop);color:#fff}
+.bd{font:700 11px/1 var(--fc);padding:4px 6px;border-radius:2px;background:var(--card)}
 .bd.out{background:var(--ink);color:#fff}
-.bd.own{background:var(--cobalt);color:#fff}
 .pin{position:absolute;right:5px;top:5px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center}
 .pin svg{width:19px;height:19px}
 .pin[aria-pressed=true] svg{fill:var(--ink)}
 .tag{padding:8px 1px 0}
 .brand{font:600 12.5px/1.25 var(--fc);letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand small{font:400 11px var(--f);color:var(--ink3);margin-left:5px}
-.title{font-size:13.5px;line-height:1.38;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px;min-height:2.76em}
+.title{font-size:13.5px;line-height:1.38;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
+.card .title{min-height:2.76em}
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;margin-top:5px}
 .price .now{font:700 16.5px/1.1 var(--fc);font-variant-numeric:tabular-nums}
 .price .now small{font:500 11.5px var(--f);margin-left:1px}
-.price .was{font:500 12px var(--fc);color:var(--ink3);text-decoration:line-through}
 .price .pct,.price .dn{font:700 12.5px var(--fc);color:var(--drop)}
+.price .up{font:700 12.5px var(--fc);color:var(--ink2)}
 .price .approx{font-size:11px;color:var(--ink3)}
 .run{display:flex;flex-wrap:wrap;gap:3px;margin-top:7px;min-height:20px}
-.sz{min-width:22px;height:20px;padding:0 4px;border:1px solid var(--line);background:var(--card);font:600 11px/18px var(--fc);text-align:center;color:var(--ink);white-space:nowrap}
+.sz{min-width:22px;height:20px;padding:0 4px;border:1px solid var(--line);background:var(--card);font:600 11px/18px var(--fc);text-align:center;white-space:nowrap}
 .sz.out{color:var(--ink3);background:linear-gradient(to top right,transparent calc(50% - .6px),var(--line) calc(50% - .6px),var(--line) calc(50% + .6px),transparent calc(50% + .6px))}
 .sz.me{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
 .sz.me.out{background:var(--card);color:var(--cobalt);border-style:dashed;text-decoration:line-through}
@@ -113,15 +108,15 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;str
 .run.big{gap:6px;margin-top:10px}
 .run.big .sz{min-width:44px;height:40px;font-size:15px;line-height:38px;padding:0 8px}
 
-/* 칩 · 입력 */
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -14px;padding:0 14px}
 .chips::-webkit-scrollbar{display:none}
-.chips.wrapx{flex-wrap:wrap;overflow:visible;margin:0;padding:0}
+.chips.wrapx{flex-wrap:wrap;overflow:visible;margin:0;padding:0;row-gap:7px}
 .chip{flex:none;height:34px;padding:0 13px;border:1px solid var(--ink);border-radius:17px;background:var(--card);font-size:13.5px;font-weight:500;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
-.chip[aria-pressed=true],.chip.on{background:var(--ink);color:#fff}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff}
 .chip.sq{border-radius:3px;min-width:44px;justify-content:center;font-family:var(--fc);font-weight:600;font-size:14.5px}
 .chip.sq[aria-pressed=true]{background:var(--cobalt);border-color:var(--cobalt)}
 .chip .sw{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.25)}
+.chip.go{border-color:var(--line)}
 .field{display:flex;align-items:center;gap:8px;height:46px;border:1px solid var(--ink);border-radius:4px;background:var(--card);padding:0 12px}
 .field input,.field select{flex:1;min-width:0;border:0;background:none;outline:0;height:100%;font-size:16px}
 .field:focus-within{outline:2px solid var(--cobalt);outline-offset:1px}
@@ -133,89 +128,81 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;str
 .btn[disabled]{opacity:.45;cursor:default}
 .row{display:flex;gap:8px;align-items:center}
 .row > .grow{flex:1;min-width:0}
-.bar{position:sticky;top:calc(51px + var(--sat));z-index:15;background:var(--paper);padding:10px 0 10px}
+.bar{position:sticky;top:calc(51px + var(--sat));z-index:15;background:var(--paper);padding:10px 0}
 .bar .chips{margin-top:9px}
 .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0 14px;font-size:13px;color:var(--ink2)}
 .meta select{border:0;background:none;font-weight:600;color:var(--ink);font-size:13.5px;padding:4px 0}
-.malls{border:1px solid var(--ink);background:var(--card);border-radius:4px;padding:12px;margin-bottom:16px}
-.malls p{font-size:13px;margin-bottom:9px}
-.malls .chips{margin:0 -12px;padding:0 12px}
-.malls .chip{border-color:var(--line)}
-
-/* 빈 상태 */
-.empty{border:1px dashed var(--ink3);border-radius:4px;padding:26px 18px;text-align:left;background:var(--card)}
+.empty{border:1px dashed var(--ink3);border-radius:4px;padding:24px 18px;background:var(--card)}
 .empty h3{font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
 .empty p{font-size:14px;color:var(--ink2);margin-bottom:14px;max-width:34em}
+.empty ol{font-size:14px;color:var(--ink2);margin:0 0 14px 1.2em}
 .skel{aspect-ratio:4/5;background:var(--photo);border-radius:3px}
 
 /* 시트 */
 .sheet-wrap{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .18s}
 .sheet{position:relative;width:100%;max-width:560px;max-height:calc(100dvh - 28px - var(--sat));background:var(--paper);border-radius:14px 14px 0 0;display:flex;flex-direction:column;transform:translateY(24px);opacity:0;transition:transform .2s ease,opacity .18s}
+.sheet.full{height:calc(100dvh - 28px - var(--sat))}
 .sheet-wrap.on .scrim{opacity:1}
 .sheet-wrap.on .sheet{transform:none;opacity:1}
-@media(min-width:700px){.sheet-wrap{align-items:center}.sheet{border-radius:10px;max-height:min(880px,calc(100dvh - 48px))}}
+@media(min-width:700px){.sheet-wrap{align-items:center}.sheet{border-radius:10px;max-height:min(900px,calc(100dvh - 48px))}.sheet.full{height:min(900px,calc(100dvh - 48px))}}
 .sh-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 12px 16px;border-bottom:1px solid var(--line);flex:none}
 .sh-head h2{font-size:16px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .x{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;flex:none}
-.sh-body{overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.sh-body{overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;flex:1;min-height:0}
 .sh-foot{flex:none;display:flex;gap:8px;padding:10px 14px calc(10px + var(--sab));border-top:1px solid var(--line);background:var(--paper)}
 .sh-foot .btn{flex:1;padding:0 10px}
 .sh-foot .btn.fix{flex:0 0 48px;padding:0}
 .fs{margin-bottom:22px}
 .fs > h3{font-size:14px;font-weight:700;margin-bottom:9px;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .fs > h3 span{font-weight:400;font-size:12px;color:var(--ink2)}
-.fs .chips.wrapx{row-gap:7px}
 
-/* 상품 상세 */
 .gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;margin:-16px -16px 14px;scrollbar-width:none;background:var(--photo)}
 .gal::-webkit-scrollbar{display:none}
 .gal img{flex:0 0 100%;aspect-ratio:1/1;object-fit:contain;scroll-snap-align:center;mix-blend-mode:multiply}
 .gal.two img{flex-basis:88%}
 .d-brand{font:600 14px var(--fc)}
-.d-title{font-size:18px;font-weight:600;line-height:1.35;letter-spacing:-.015em;margin:2px 0 8px}
-.d-price .now{font-size:24px}
+.d-title{font-size:18px;font-weight:600;line-height:1.35;letter-spacing:-.015em;margin:2px 0 4px}
 .d-sub{font-size:12.5px;color:var(--ink2);margin-top:4px}
-.why{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
-.why span{font-size:12.5px;padding:4px 9px;border-radius:3px;background:var(--card);border:1px solid var(--line)}
-.kv{margin-top:18px;border-top:1px solid var(--line)}
+.d-price .now{font-size:24px}
+.kv{margin-top:16px;border-top:1px solid var(--line)}
 .kv div{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .kv dt{color:var(--ink2);flex:none}
 .kv dd{text-align:right;min-width:0}
-.hist{display:flex;align-items:flex-end;gap:5px;height:44px;margin-top:8px}
-.hist i{flex:1;max-width:26px;background:var(--ink);min-height:3px}
-.hist i:last-child{background:var(--cobalt)}
-.linkrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.linkrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.malls{border:1px solid var(--ink);background:var(--card);border-radius:4px;padding:12px;margin-top:16px}
+.malls p{font-size:13px;margin-bottom:9px}
+.malls .chips{margin:0 -12px;padding:0 12px}
+.prev{display:flex;gap:12px;align-items:flex-start}
+.prev .th{flex:0 0 96px;aspect-ratio:4/5;background:var(--photo);border-radius:3px;overflow:hidden}
+.prev .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
 
-/* 리스트(찜, 옷장, 코디) */
-.list{display:flex;flex-direction:column}
-.li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:stretch}
-.li .th{flex:0 0 84px;aspect-ratio:4/5;background:var(--photo);border-radius:3px;overflow:hidden}
-.li .th img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
-.li .bd2{flex:1;min-width:0;display:flex;flex-direction:column}
-.li .title{min-height:0}
-.li .acts{margin-top:auto;display:flex;gap:6px;padding-top:8px;flex-wrap:wrap}
-.delta{font:700 12.5px var(--fc)}
-.delta.dn{color:var(--drop)} .delta.up{color:var(--ink2)}
-.segc{display:flex;border:1px solid var(--ink);border-radius:4px;overflow:hidden;background:var(--card)}
-.segc button{flex:1;height:38px;font-size:14px;font-weight:600;text-align:center}
-.segc button[aria-pressed=true]{background:var(--ink);color:#fff}
-.look{border:1px solid var(--ink);border-radius:4px;background:var(--card);padding:12px;margin-bottom:12px}
-.look h3{font-size:15px;font-weight:700;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.look .pcs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
-.look .pcs .p{aspect-ratio:4/5;background:var(--photo);border-radius:2px;overflow:hidden;position:relative}
-.look .pcs img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
-.look .pcs .p em{position:absolute;left:0;bottom:0;font:600 10px/1 var(--f);font-style:normal;background:var(--cobalt);color:#fff;padding:3px 5px}
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.slot{aspect-ratio:4/5;border:1px dashed var(--ink3);border-radius:3px;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:12.5px;color:var(--ink2);position:relative;overflow:hidden;text-align:center}
-.slot.has{border:1px solid var(--ink)}
-.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
-.slot .lb{position:absolute;left:0;top:0;background:var(--ink);color:#fff;font-size:10.5px;padding:3px 6px;z-index:1}
+/* 보드 */
+.blist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px;margin-top:16px}
+@media(min-width:700px){.blist{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.bcard .bthumb{display:block;width:100%;aspect-ratio:3/4;border:1px solid var(--ink);border-radius:3px;overflow:hidden;position:relative;background:var(--card)}
+.bcard .bthumb img{width:100%;height:100%;object-fit:cover}
+.bcard h3{font-size:14px;font-weight:600;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bcard p{font-size:12px;color:var(--ink2)}
+.stage{position:relative;width:min(100%,calc(56dvh * .75),470px);aspect-ratio:3/4;margin:0 auto;border:1px solid var(--ink);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;background:#fff}
+.stage.mini{width:100%;border:0;pointer-events:none}
+.pc{position:absolute;transform-origin:center;cursor:grab;line-height:0}
+.pc img{width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+.pc.sel{outline:1.5px dashed var(--cobalt);outline-offset:3px}
+.ptools{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px -16px 0;padding:0 16px;min-height:38px}
+.ptools::-webkit-scrollbar{display:none}
+.ptools .btn{flex:none}
+.etools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.sws{display:flex;gap:6px;align-items:center}
+.sws button{width:28px;height:28px;border-radius:50%;border:1px solid var(--ink3)}
+.sws button[aria-pressed=true]{outline:2px solid var(--cobalt);outline-offset:2px}
 .pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .pick button{display:block;aspect-ratio:4/5;background:var(--photo);border-radius:3px;overflow:hidden;position:relative}
 .pick img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
+.pick button[aria-pressed=true]{outline:3px solid var(--cobalt);outline-offset:-3px}
+.pick button[aria-pressed=true]::after{content:"✓";position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:var(--cobalt);color:#fff;font:700 13px/22px var(--f);text-align:center}
+.shot{width:100%;border:1px solid var(--ink)}
 
-/* MY */
 .panel{border:1px solid var(--ink);border-radius:4px;background:var(--card);padding:14px;margin-bottom:12px}
 .panel h3{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
 .panel p{font-size:13.5px;color:var(--ink2)}
@@ -241,10 +228,9 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;str
 <main class="wrap" id="view" tabindex="-1"></main>
 
 <nav class="tabs" aria-label="메뉴"><ul>
-  <li><a href="#home" data-tab="home"><svg class="ic" viewBox="0 0 24 24"><path d="M3.5 12.3V4h8.3l8.7 8.7-7.9 7.9z"/><circle cx="8" cy="8.5" r="1.3"/></svg>추천</a></li>
-  <li><a href="#explore" data-tab="explore"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>탐색</a></li>
-  <li><a href="#wish" data-tab="wish"><svg class="ic" viewBox="0 0 24 24"><path d="M12 20.3S4.5 15.8 4.5 10.2A4.2 4.2 0 0 1 12 7.7a4.2 4.2 0 0 1 7.5 2.5c0 5.6-7.5 10.1-7.5 10.1z"/></svg>찜<span class="cnt hide" id="wishCnt"></span></a></li>
-  <li><a href="#looks" data-tab="looks"><svg class="ic" viewBox="0 0 24 24"><path d="M12 8.6V7.3a2.2 2.2 0 1 0-2.2-2.2"/><path d="M12 8.6 3.4 15.4c-.8.7-.4 2 .7 2h15.8c1.100 0 1.5-1.300.7-2z"/></svg>코디</a></li>
+  <li><a href="#home" data-tab="home"><svg class="ic" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="9" rx="1"/><rect x="13" y="4" width="7" height="6" rx="1"/><rect x="4" y="15" width="7" height="5" rx="1"/><rect x="13" y="12" width="7" height="8" rx="1"/></svg>모음<span class="cnt hide" id="saveCnt"></span></a></li>
+  <li><a href="#boards" data-tab="boards"><svg class="ic" viewBox="0 0 24 24"><rect x="4.5" y="3.500" width="15" height="17" rx="1"/><path d="M8 8h4v5H8zM14 11h2.500v6H14zM8 15.500h3"/></svg>보드</a></li>
+  <li><a href="#store" data-tab="store"><svg class="ic" viewBox="0 0 24 24"><path d="M3.5 12.3V4h8.3l8.7 8.7-7.9 7.9z"/><circle cx="8" cy="8.5" r="1.3"/></svg>스토어</a></li>
   <li><a href="#my" data-tab="my"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.6 20c.8-3.500 3.800-5.400 7.400-5.400s6.600 1.900 7.400 5.400"/></svg>MY</a></li>
 </ul></nav>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -261,33 +247,23 @@ const fold = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-
 const TODAY = new Date().toISOString().slice(0, 10);
 const daysSince = (d) => (d ? Math.floor((Date.now() - new Date(d).getTime()) / 864e5) : 9999);
 const hash = (s) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 1000) / 1000; };
+const uid = (p) => p + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36);
 const IC = {
   heart: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 20.3S4.5 15.8 4.5 10.2A4.2 4.2 0 0 1 12 7.7a4.2 4.2 0 0 1 7.5 2.5c0 5.6-7.5 10.1-7.5 10.1z"/></svg>',
   x: '<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   search: '<svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>',
   filter: '<svg class="ic" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>',
   plus: '<svg class="ic" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
-  out: '<svg class="ic" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M11 7H6v11h11v-5"/></svg>',
-  trash: '<svg class="ic" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg>',
+  out: '<svg class="ic s" viewBox="0 0 24 24"><path d="M14 5h5v5M19 5l-8 8M11 7H6v11h11v-5"/></svg>',
+  trash: '<svg class="ic s" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></svg>',
 };
 
 /* ═════════════ 사전 ═════════════ */
 const CATS = [['all', '전체'], ['outer', '아우터'], ['top', '상의'], ['bottom', '하의'], ['shoes', '신발'], ['bag', '가방'], ['head', '모자'], ['acc', '잡화'], ['etc', '기타']];
 const CATNAME = Object.fromEntries(CATS);
+const CATORDER = { head: 0, outer: 1, top: 2, bottom: 3, shoes: 4, bag: 5, acc: 6, etc: 7 };
 const SUBS = { tee: '반팔 티셔츠', longsleeve: '긴팔 티셔츠', shirt: '셔츠', hoodie: '후드', sweat: '맨투맨', knit: '니트', cardigan: '가디건', polo: '폴로', jersey: '저지', tank: '탱크탑', top: '상의', jacket: '자켓', coat: '코트', puffer: '패딩', fleece: '플리스', windbreaker: '바람막이', vest: '베스트', blazer: '블레이저', pants: '팬츠', jeans: '데님', shorts: '쇼츠', skirt: '스커트', sweatpants: '스웨트팬츠', cargo: '카고', slacks: '슬랙스', sneakers: '스니커즈', boots: '부츠', loafers: '로퍼', sandals: '샌들', shoes: '신발', backpack: '백팩', tote: '토트', crossbody: '크로스백', bag: '가방', cap: '캡', beanie: '비니', bucket: '버킷햇', hat: '모자', socks: '양말', belt: '벨트', wallet: '지갑', scarf: '머플러', gloves: '장갑', eyewear: '아이웨어', jewelry: '주얼리', acc: '잡화', etc: '기타' };
 const COLORS = { black: ['블랙', '#111'], white: ['화이트', '#fff'], cream: ['크림', '#EFE6D2'], grey: ['그레이', '#9A9A9A'], navy: ['네이비', '#1C2748'], blue: ['블루', '#2E6FD8'], green: ['그린', '#2F8A4F'], khaki: ['카키', '#6B6A3C'], beige: ['베이지', '#CDB892'], brown: ['브라운', '#6F4A2E'], red: ['레드', '#C8202F'], pink: ['핑크', '#F2A0B8'], purple: ['퍼플', '#7A4FB5'], yellow: ['옐로', '#F0C419'], orange: ['오렌지', '#EE7A1C'], multi: ['패턴', 'conic-gradient(#C8202F,#F0C419,#2F8A4F,#2E6FD8,#C8202F)'] };
-const NEUTRAL = new Set(['black', 'white', 'cream', 'grey', 'navy', 'beige']);
-const STYLES = [
-  { id: 'street', name: '스트릿', sc: ['hoodie', 'tee', 'cap', 'sneakers', 'sweat'], re: /graphic|logo|skate|baggy|stock|oversized|그래픽|로고|오버핏/ },
-  { id: 'minimal', name: '미니멀', sc: ['knit', 'shirt', 'slacks', 'coat', 'cardigan'], re: /plain|basic|essential|solid|classic|무지|베이직|에센셜/ },
-  { id: 'work', name: '워크웨어·아메카지', sc: ['jeans', 'jacket', 'vest'], re: /work|chore|carpenter|double knee|canvas|duck|denim|selvedge|painter|coverall|detroit|워크|데님|캔버스/ },
-  { id: 'gorp', name: '고프코어·아웃도어', sc: ['puffer', 'fleece', 'windbreaker'], re: /fleece|shell|gore|nylon|trail|mountain|trek|hiking|ripstop|pertex|outdoor|플리스|나일론|바람막이/ },
-  { id: 'sport', name: '스포티·블록코어', sc: ['jersey', 'sweatpants'], re: /jersey|track|soccer|football|training|running|athletic|mesh|team|저지|트랙|트레이닝/ },
-  { id: 'vintage', name: '빈티지', sc: [], re: /vintage|washed|faded|distress|pigment|garment dye|overdyed|bleach|빈티지|워싱|피그먼트/ },
-  { id: 'tech', name: '테크웨어', sc: ['cargo', 'windbreaker'], re: /tech|cargo|utility|waterproof|convertible|3l\b|2l\b|테크|카고|유틸리티/ },
-  { id: 'prep', name: '프레피·클래식', sc: ['polo', 'cardigan', 'blazer', 'loafers', 'shirt'], re: /oxford|polo|cardigan|blazer|stripe|rugby|varsity|argyle|cable|옥스포드|럭비|스트라이프/ },
-];
-const STYLE = Object.fromEntries(STYLES.map((s) => [s.id, s]));
 const TOP_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 const WAISTS = ['26', '27', '28', '29', '30', '31', '32', '33', '34', '36', '38'];
 const SHOES = []; for (let m = 220; m <= 300; m += 5) SHOES.push(String(m));
@@ -295,99 +271,99 @@ const BUDGETS = [[0, '제한 없음'], [50000, '5만원'], [100000, '10만원'],
 const ALPHA = { XXS: ['XXS', '2XS'], XS: ['XS', 'XSMALL', 'X-SMALL', '85'], S: ['S', 'SMALL', '90'], M: ['M', 'MEDIUM', 'MED', '95'], L: ['L', 'LARGE', '100'], XL: ['XL', 'XLARGE', 'X-LARGE', '105'], XXL: ['XXL', '2XL', '2X', 'XX-LARGE', '110'] };
 const EU_BY_MM = { 220: '35.5', 225: '36', 230: '36.5', 235: '37.5', 240: '38.5', 245: '39', 250: '40', 255: '40.5', 260: '41', 265: '42', 270: '42.5', 275: '43', 280: '44', 285: '44.5', 290: '45', 295: '45.5', 300: '46' };
 const MALLS = [
-  ['musinsa', '무신사', (q) => `https://www.musinsa.com/search/goods?keyword=${q}`],
-  ['kream', 'KREAM', (q) => `https://kream.co.kr/search?keyword=${q}`],
-  ['29cm', '29CM', (q) => `https://shop.29cm.co.kr/search?keyword=${q}`],
-  ['wconcept', 'W컨셉', (q) => `https://display.wconcept.co.kr/search?keyword=${q}`],
-  ['zigzag', '지그재그', (q) => `https://zigzag.kr/search?keyword=${q}`],
-  ['ably', '에이블리', (q) => `https://m.a-bly.com/search?keyword=${q}`],
-  ['ssf', 'SSF샵', (q) => `https://www.ssfshop.com/search?keyword=${q}`],
-  ['bunjang', '번개장터', (q) => `https://m.bunjang.co.kr/search/products?q=${q}`],
-  ['naver', '네이버쇼핑', (q) => `https://search.shopping.naver.com/search/all?query=${q}`],
-  ['coupang', '쿠팡', (q) => `https://www.coupang.com/np/search?q=${q}`],
-  ['google', '구글 쇼핑', (q) => `https://www.google.com/search?tbm=shop&q=${q}`],
+  ['musinsa', '무신사', (q) => `https://www.musinsa.com/search/goods?keyword=${q}`, 'https://www.musinsa.com/'],
+  ['kream', 'KREAM', (q) => `https://kream.co.kr/search?keyword=${q}`, 'https://kream.co.kr/'],
+  ['29cm', '29CM', (q) => `https://shop.29cm.co.kr/search?keyword=${q}`, 'https://www.29cm.co.kr/'],
+  ['bunjang', '번개장터', (q) => `https://m.bunjang.co.kr/search/products?q=${q}`, 'https://m.bunjang.co.kr/'],
+  ['wconcept', 'W컨셉', (q) => `https://display.wconcept.co.kr/search?keyword=${q}`, 'https://www.wconcept.co.kr/'],
+  ['zigzag', '지그재그', (q) => `https://zigzag.kr/search?keyword=${q}`, 'https://zigzag.kr/'],
+  ['ably', '에이블리', (q) => `https://m.a-bly.com/search?keyword=${q}`, 'https://m.a-bly.com/'],
+  ['naver', '네이버쇼핑', (q) => `https://search.shopping.naver.com/search/all?query=${q}`, 'https://shopping.naver.com/'],
+  ['google', '구글 쇼핑', (q) => `https://www.google.com/search?tbm=shop&q=${q}`, 'https://shopping.google.com/'],
 ];
-const HOSTNAME = { 'musinsa.com': '무신사', 'kream.co.kr': 'KREAM', '29cm.co.kr': '29CM', 'wconcept.co.kr': 'W컨셉', 'zigzag.kr': '지그재그', 'a-bly.com': '에이블리', 'ssfshop.com': 'SSF샵', 'bunjang.co.kr': '번개장터', 'naver.com': '네이버', 'coupang.com': '쿠팡', 'ssense.com': 'SSENSE', 'nike.com': 'Nike', 'adidas.co.kr': 'adidas', 'soldout.co.kr': '솔드아웃', 'worksout.co.kr': 'WORKSOUT' };
-const SYN = { 후드: ['hood'], 후드티: ['hood'], 후디: ['hood'], 맨투맨: ['crew', 'sweatshirt'], 티셔츠: ['tee', 't-shirt'], 반팔: ['tee', 't-shirt', 's/s', 'short sleeve'], 긴팔: ['long sleeve', 'l/s', 'longsleeve'], 니트: ['knit', 'sweater'], 스웨터: ['sweater', 'knit'], 가디건: ['cardigan'], 셔츠: ['shirt'], 자켓: ['jacket'], 재킷: ['jacket'], 패딩: ['puffer', 'down', 'padded'], 코트: ['coat'], 바람막이: ['windbreaker', 'anorak', 'shell'], 플리스: ['fleece'], 후리스: ['fleece'], 조끼: ['vest'], 베스트: ['vest'], 바지: ['pant', 'trouser'], 팬츠: ['pant', 'trouser'], 청바지: ['jean', 'denim'], 데님: ['denim', 'jean'], 반바지: ['short'], 쇼츠: ['short'], 카고: ['cargo'], 슬랙스: ['slack', 'trouser'], 조거: ['jogger', 'sweatpant'], 치마: ['skirt'], 스커트: ['skirt'], 모자: ['cap', 'hat', 'beanie'], 캡: ['cap'], 볼캡: ['cap'], 비니: ['beanie'], 가방: ['bag', 'backpack', 'tote'], 백팩: ['backpack'], 신발: ['shoe', 'sneaker', 'boot'], 스니커즈: ['sneaker'], 운동화: ['sneaker', 'runner'], 부츠: ['boot'], 로퍼: ['loafer'], 양말: ['sock'], 벨트: ['belt'], 지갑: ['wallet'], 머플러: ['scarf', 'muffler'], 검정: ['black'], 블랙: ['black'], 흰색: ['white'], 화이트: ['white'], 회색: ['grey', 'gray'], 그레이: ['grey', 'gray'], 네이비: ['navy'], 파랑: ['blue'], 블루: ['blue'], 초록: ['green'], 그린: ['green'], 카키: ['khaki', 'olive'], 베이지: ['beige', 'sand', 'tan'], 갈색: ['brown'], 브라운: ['brown'], 빨강: ['red'], 레드: ['red'], 핑크: ['pink'], 보라: ['purple'], 노랑: ['yellow'], 스투시: ['stussy'], 스투시코리아: ['stussy'], 키스: ['kith'], 휴먼메이드: ['human made'], 칼하트: ['carhartt'], 나이키: ['nike'], 아디다스: ['adidas'], 뉴발란스: ['new balance'], 아식스: ['asics'], 살로몬: ['salomon'], 컨버스: ['converse'], 반스: ['vans'], 노스페이스: ['north face'], 파타고니아: ['patagonia'], 아크테릭스: ["arc'teryx", 'arcteryx'], 슈프림: ['supreme'], 오베이: ['obey'], 디키즈: ['dickies'], 챔피온: ['champion'], 뉴에라: ['new era'], 닥터마틴: ['dr. martens', 'dr martens'], 그라미치: ['gramicci'], 브레인데드: ['brain dead'], 다임: ['dime'], 파타: ['patta'], 웍스아웃: ['worksout'], 클락스: ['clarks'], 오클리: ['oakley'], 호카: ['hoka'], 팔라디움: ['palladium'], 버켄스탁: ['birkenstock'], 크록스: ['crocs'] };
+const HOSTNAME = { 'musinsa.com': '무신사', 'musinsa.onelink.me': '무신사', 'kream.co.kr': 'KREAM', 'kream.airbridge.io': 'KREAM', '29cm.co.kr': '29CM', 'wconcept.co.kr': 'W컨셉', 'zigzag.kr': '지그재그', 'a-bly.com': '에이블리', 'ssfshop.com': 'SSF샵', 'bunjang.co.kr': '번개장터', 'naver.com': '네이버', 'coupang.com': '쿠팡', 'ssense.com': 'SSENSE', 'nike.com': 'Nike', 'adidas.co.kr': 'adidas', 'soldout.co.kr': '솔드아웃', 'worksout.co.kr': 'WORKSOUT' };
+const SYN = { 후드: ['hood'], 후드티: ['hood'], 후디: ['hood'], 맨투맨: ['crew', 'sweatshirt'], 티셔츠: ['tee', 't-shirt'], 반팔: ['tee', 't-shirt', 's/s', 'short sleeve'], 긴팔: ['long sleeve', 'l/s', 'longsleeve'], 니트: ['knit', 'sweater'], 스웨터: ['sweater', 'knit'], 가디건: ['cardigan'], 셔츠: ['shirt'], 자켓: ['jacket'], 재킷: ['jacket'], 패딩: ['puffer', 'down', 'padded'], 코트: ['coat'], 바람막이: ['windbreaker', 'anorak', 'shell'], 플리스: ['fleece'], 후리스: ['fleece'], 조끼: ['vest'], 베스트: ['vest'], 바지: ['pant', 'trouser'], 팬츠: ['pant', 'trouser'], 청바지: ['jean', 'denim'], 데님: ['denim', 'jean'], 반바지: ['short'], 쇼츠: ['short'], 카고: ['cargo'], 슬랙스: ['slack', 'trouser'], 조거: ['jogger', 'sweatpant'], 치마: ['skirt'], 스커트: ['skirt'], 모자: ['cap', 'hat', 'beanie'], 캡: ['cap'], 볼캡: ['cap'], 비니: ['beanie'], 가방: ['bag', 'backpack', 'tote'], 백팩: ['backpack'], 신발: ['shoe', 'sneaker', 'boot'], 스니커즈: ['sneaker'], 운동화: ['sneaker', 'runner'], 부츠: ['boot'], 로퍼: ['loafer'], 양말: ['sock'], 벨트: ['belt'], 지갑: ['wallet'], 머플러: ['scarf', 'muffler'], 검정: ['black'], 블랙: ['black'], 흰색: ['white'], 화이트: ['white'], 회색: ['grey', 'gray'], 그레이: ['grey', 'gray'], 네이비: ['navy'], 파랑: ['blue'], 블루: ['blue'], 초록: ['green'], 그린: ['green'], 카키: ['khaki', 'olive'], 베이지: ['beige', 'sand', 'tan'], 갈색: ['brown'], 브라운: ['brown'], 빨강: ['red'], 레드: ['red'], 핑크: ['pink'], 보라: ['purple'], 노랑: ['yellow'], 스투시: ['stussy'], 키스: ['kith'], 칼하트: ['carhartt'], 나이키: ['nike'], 아디다스: ['adidas'], 뉴발란스: ['new balance'], 아식스: ['asics'], 살로몬: ['salomon'], 컨버스: ['converse'], 반스: ['vans'], 노스페이스: ['north face'], 파타고니아: ['patagonia'], 슈프림: ['supreme'], 오베이: ['obey'], 디키즈: ['dickies'], 그라미치: ['gramicci'], 브레인데드: ['brain dead'], 다임: ['dime'], 파타: ['patta'], 조던: ['jordan'], 덩크: ['dunk'], 에센셜: ['essentials'], 피어오브갓: ['fear of god'], 노아: ['noah'], 허프: ['huf'], 네이버후드: ['neighborhood'], 더블탭스: ['wtaps'], 써그클럽: ['thug club'], 산산기어: ['san san gear'] };
 
 /* ═════════════ 저장 상태 (이 기기에만 저장) ═════════════ */
 const LS_KEY = 'moafit:v1';
 const BLANK = () => ({
-  v: 1,
-  profile: { name: '준수', fit: 'all', top: '', bottomA: '', waist: '', shoe: '', budget: 0, styles: [], brands: [], colors: [], onboarded: false, global: true },
-  wish: {}, closet: {}, hidden: {}, custom: {}, looks: [],
-  w: { brand: {}, sc: {}, col: {} },
-  malls: ['musinsa', 'kream', '29cm', 'wconcept', 'bunjang', 'naver', 'google'],
+  v: 2,
+  profile: { name: '준수', fit: 'all', top: '', bottomA: '', waist: '', shoe: '', global: true },
+  saved: {}, custom: {}, boards: [],
+  malls: ['musinsa', 'kream', '29cm', 'bunjang', 'naver'],
 });
 let S = BLANK();
-function loadState() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return;
-    const j = JSON.parse(raw);
-    const b = BLANK();
-    S = { ...b, ...j, profile: { ...b.profile, ...(j.profile || {}) }, w: { ...b.w, ...(j.w || {}) } };
-  } catch { /* 저장소를 못 쓰는 환경이면 기본값으로 계속 */ }
+function adopt(j) {
+  const b = BLANK();
+  if (j.wish && !j.saved) j.saved = j.wish;
+  S = { ...b, saved: j.saved || {}, custom: j.custom || {}, boards: Array.isArray(j.boards) ? j.boards : [], malls: Array.isArray(j.malls) ? j.malls : b.malls, profile: { ...b.profile, ...(j.profile || {}) } };
 }
+function loadState() { try { const raw = localStorage.getItem(LS_KEY); if (raw) adopt(JSON.parse(raw)); } catch { /* 저장소를 못 쓰면 기본값으로 계속 */ } }
 let saveT = 0;
 function save() {
   scoresDirty = true;
   clearTimeout(saveT);
   saveT = setTimeout(() => {
     try { localStorage.setItem(LS_KEY, JSON.stringify(S)); }
-    catch { toast('기기 저장 공간이 부족해 저장하지 못했어요. 사진으로 추가한 옷을 줄여 주세요.'); }
+    catch { toast('기기 저장 공간이 부족해요. 직접 넣은 사진이나 오래된 보드를 줄여 주세요.'); }
   }, 120);
 }
 
-/* ═════════════ 카탈로그 ═════════════ */
-let ITEMS = [], BYID = new Map(), META = null, STORES = {}, LOADED = false, LOAD_ERR = '';
+/* ═════════════ 스토어 카탈로그 (스토어 탭을 열 때만 불러옴) ═════════════ */
+let ITEMS = [], BYID = new Map(), META = null, STORES = {}, LOADED = false, LOAD_ERR = '', loading = null;
 let scoresDirty = true, SCORED = [];
 function sizedImg(u, w) {
   if (!u || u.startsWith('data:')) return u || '';
   if (/cdn\.shopify\.com|\/cdn\/shop\//.test(u)) return u + (u.includes('?') ? '&' : '?') + 'width=' + w;
   return u;
 }
+/* 다른 사이트 사진을 캔버스에 그릴 수 있게 해 주는 공개 이미지 프록시 */
+function corsURL(u, w = 900) { return !u || u.startsWith('data:') ? u : `https://wsrv.nl/?url=${encodeURIComponent(u)}&w=${w}&we`; }
 function prep(it) {
-  it.hay = fold(`${it.b} ${it.t} ${SUBS[it.sc] || ''} ${CATNAME[it.c] || ''} ${(it.col || []).map((c) => COLORS[c]?.[0]).join(' ')} ${it.st ? it.st.name : it.mall || ''}`);
+  it.hay = fold(`${it.b} ${it.t} ${it.sub || ''} ${SUBS[it.sc] || ''} ${CATNAME[it.c] || ''} ${(it.col || []).map((c) => COLORS[c]?.[0]).join(' ')} ${it.st ? it.st.name : it.mall || ''}`);
   return it;
 }
-async function loadCatalog() {
-  try {
-    const r = await fetch('data/meta.json', { cache: 'no-cache' });
-    if (!r.ok) throw new Error('meta ' + r.status);
-    META = await r.json();
-  } catch (e) {
-    LOADED = true; LOAD_ERR = 'nometa'; return;
-  }
-  const live = (META.stores || []).filter((s) => s.count > 0);
-  const packs = await Promise.allSettled(live.map((s) => fetch(`data/s/${s.id}.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status))))));
-  const items = [];
-  for (const p of packs) {
-    if (p.status !== 'fulfilled' || !p.value?.items) continue;
-    const j = p.value, st = j.store, ib = j.ib || '';
-    STORES[st.id] = st;
-    for (const it of j.items) {
-      it.i = ib + it.i;
-      it.i2 = it.i2 ? (it.i2[0] === '!' ? it.i2.slice(1) : ib + it.i2) : '';
-      it.s = st.id; it.st = st; it.kr = st.region === 'KR'; it.cur = st.currency;
-      it.url = `https://${st.domain}/products/${it.u}`;
-      it.z = it.z || [];
-      items.push(prep(it));
-    }
-  }
-  ITEMS = items;
-  BYID = new Map(items.map((x) => [x.id, x]));
-  LOADED = true; scoresDirty = true;
-  if (!items.length) LOAD_ERR = 'empty';
+async function loadMeta() {
+  if (META) return META;
+  try { const r = await fetch('data/meta.json', { cache: 'no-cache' }); if (r.ok) META = await r.json(); } catch { /* 없음 */ }
+  return META;
 }
-function customItems() { return Object.values(S.custom).map((c) => { if (!c.hay) prep(c); c.z = c.z || []; c.a = 1; return c; }); }
+function ensureCatalog() {
+  if (loading) return loading;
+  loading = (async () => {
+    await loadMeta();
+    if (!META) { LOADED = true; LOAD_ERR = 'nometa'; return; }
+    const live = (META.stores || []).filter((s) => s.count > 0);
+    const packs = await Promise.allSettled(live.map((s) => fetch(`data/s/${s.id}.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : Promise.reject(new Error(r.status))))));
+    const items = [];
+    for (const p of packs) {
+      if (p.status !== 'fulfilled' || !p.value?.items) continue;
+      const j = p.value, st = j.store, ib = j.ib || '';
+      STORES[st.id] = st;
+      for (const it of j.items) {
+        it.i = ib + it.i;
+        it.i2 = it.i2 ? (it.i2[0] === '!' ? it.i2.slice(1) : ib + it.i2) : '';
+        it.s = st.id; it.st = st; it.kr = st.region === 'KR'; it.cur = st.currency;
+        it.url = `https://${st.domain}/products/${it.u}`;
+        it.z = it.z || [];
+        items.push(prep(it));
+      }
+    }
+    ITEMS = items; BYID = new Map(items.map((x) => [x.id, x]));
+    LOADED = true; scoresDirty = true;
+    if (!items.length) LOAD_ERR = 'empty';
+  })();
+  return loading;
+}
 function getItem(id) {
   if (BYID.has(id)) return BYID.get(id);
-  if (S.custom[id]) return prep(S.custom[id]);
-  const snap = S.wish[id]?.snap || S.closet[id]?.snap;
-  if (snap) return prep({ ...snap, id, z: [], a: 0, gone: true });
+  if (S.custom[id]) { const c = S.custom[id]; c.z = c.z || []; c.a = 1; return prep(c); }
+  const snap = S.saved[id]?.snap;
+  if (snap) return prep({ ...snap, id, z: [], a: 1, snapOnly: true });
   return null;
 }
+const srcOf = (it) => (it.custom ? (it.mall === '무신사' ? 'mu' : it.mall === 'KREAM' ? 'kr' : 'etc') : 'st');
+const srcLabel = (it) => (it.custom ? it.mall || '직접 추가' : it.st ? it.st.name : it.mall || '스토어');
 
 /* ═════════════ 내 사이즈 판정 ═════════════ */
 function sizeTokens(label) { return String(label).toUpperCase().replace(/[()]/g, ' ').split(/[\s\/,|·]+/).filter(Boolean); }
@@ -418,21 +394,18 @@ function matchLabel(it, label) {
   }
   return null;
 }
-/* 'yes' 내 사이즈 재고 있음 · 'no' 내 사이즈 품절이거나 없음 · 'na' 판정 불가 */
 function mySize(it) {
-  if (it._ms !== undefined && !scoresDirty) return it._ms;
   let res = 'na';
   if (it.z && it.z.length) {
-    let found = false, anyKnown = false;
+    let found = false, known = false;
     for (const [label, ok] of it.z) {
       const m = matchLabel(it, label);
-      if (m === null) { anyKnown = false; break; }
-      anyKnown = true;
+      if (m === null) { known = false; break; }
+      known = true;
       if (m) { found = true; res = ok ? 'yes' : 'no'; break; }
     }
-    if (anyKnown && !found) res = 'no';
+    if (known && !found) res = 'no';
   }
-  it._ms = res;
   return res;
 }
 function runHTML(it, big) {
@@ -449,15 +422,7 @@ function runHTML(it, big) {
   return `<div class="run${big ? ' big' : ''}" aria-label="사이즈별 재고">${list.map((x) => `<span class="sz${x.ok ? '' : ' out'}${x.me ? ' me' : ''}"${x.me ? ' title="내 사이즈"' : ''}>${esc(x.label)}</span>`).join('')}${extra > 0 ? `<span class="sz more">+${extra}</span>` : ''}</div>`;
 }
 
-/* ═════════════ 추천 점수 ═════════════ */
-function dropOf(it) {
-  const h = it.h;
-  if (!h || h.length < 2) return 0;
-  const [d, now] = h[h.length - 1], prev = h[h.length - 2][1];
-  if (now < prev && daysSince(d) <= 14) return Math.round((prev - now) * (it.st?.rate || 1));
-  return 0;
-}
-const isNew = (it) => daysSince(it.d) <= 7;
+/* ═════════════ 스토어 탭 정렬용 점수 ═════════════ */
 function fitOK(it) {
   const f = S.profile.fit;
   if (it.g === 'k') return false;
@@ -465,121 +430,98 @@ function fitOK(it) {
   if (f === 'w') return it.g !== 'm';
   return true;
 }
-function styleHits(it) {
-  const out = [];
-  for (const id of S.profile.styles) { const d = STYLE[id]; if (d && (d.sc.includes(it.sc) || d.re.test(it.hay))) out.push(d); }
-  return out;
-}
 function score(it) {
-  const P = S.profile, W = S.w;
   let s = 0;
   if (!it.a) s -= 9;
-  if (P.brands.includes(it.b)) s += 6;
-  s += clamp(W.brand[it.b] || 0, -6, 8);
-  s += clamp(W.sc[it.sc] || 0, -4, 5);
-  for (const c of it.col || []) { s += clamp(W.col[c] || 0, -2, 2.5); if (P.colors.includes(c)) s += 1.2; }
-  s += Math.min(styleHits(it).length, 2) * 2.2;
   const ms = mySize(it);
   if (ms === 'yes') s += 3; else if (ms === 'no') s -= 2.5;
   const age = daysSince(it.d);
-  if (age <= 7) s += 3; else if (age <= 30) s += 1.5; else if (age > 365) s -= 1;
-  if (dropOf(it)) s += 2;
-  if (it.o) s += 0.8;
-  if (P.budget) { if (it.k <= P.budget) s += 1; else if (it.k > P.budget * 1.5) s -= 3; else s -= 1; }
-  if (it.kr) s += 2;
+  if (age <= 14) s += 2; else if (age > 365) s -= 1;
+  if (it.kr) s += 3;
   if (it.c === 'etc') s -= 4; else if (it.c === 'acc') s -= 1.5;
-  s += hash(it.id + TODAY) * 1.5;
-  return s;
+  return s + hash(it.id + TODAY) * 2.5;
 }
-function reasons(it) {
-  const P = S.profile, out = [];
-  if (P.brands.includes(it.b)) out.push('고른 브랜드');
-  else if ((S.w.brand[it.b] || 0) >= 2) out.push('자주 찜한 브랜드');
-  if (mySize(it) === 'yes') out.push('내 사이즈 재고 있음');
-  for (const d of styleHits(it).slice(0, 2)) out.push(d.name + ' 취향');
-  if ((it.col || []).some((c) => P.colors.includes(c))) out.push('좋아하는 색');
-  if (dropOf(it)) out.push('최근 가격 내림');
-  if (isNew(it)) out.push('이번 주 신상');
-  if (P.budget && it.k <= P.budget) out.push('예산 안');
-  return out;
-}
-function visible(it) { return !S.hidden[it.id] && fitOK(it) && (S.profile.global || it.kr || it.custom); }
 function scored() {
   if (!scoresDirty) return SCORED;
-  for (const it of ITEMS) it._ms = undefined;
-  const list = ITEMS.filter(visible).map((it) => { it._s = score(it); return it; });
+  const list = ITEMS.filter((it) => fitOK(it) && (S.profile.global || it.kr)).map((it) => { it._s = score(it); return it; });
   list.sort((a, b) => b._s - a._s);
-  // 같은 브랜드가 연달아 나오지 않게 앞쪽을 섞는다
   const head = list.slice(0, 720), rest = list.slice(720), out = [], recent = [];
   while (head.length && out.length < 240) {
     let i = head.findIndex((x) => !recent.includes(x.b));
     if (i < 0) i = 0;
     const [x] = head.splice(i, 1);
-    out.push(x); recent.push(x.b); if (recent.length > 3) recent.shift();
+    out.push(x); recent.push(x.b); if (recent.length > 2) recent.shift();
   }
   SCORED = [...out, ...head, ...rest];
   scoresDirty = false;
   return SCORED;
 }
-function learn(it, kind) {
-  const W = S.w, d = { wish: [2, 1, 0.6], unwish: [-1, -0.5, -0.3], hide: [-1.5, -0.7, 0], open: [0.25, 0.12, 0.05], own: [1.2, 0.6, 0.4] }[kind];
-  if (!d || !it) return;
-  W.brand[it.b] = clamp((W.brand[it.b] || 0) + d[0], -10, 12);
-  if (it.sc) W.sc[it.sc] = clamp((W.sc[it.sc] || 0) + d[1], -6, 8);
-  for (const c of it.col || []) W.col[c] = clamp((W.col[c] || 0) + d[2], -4, 5);
-}
 
-/* ═════════════ 카드 · 공통 조각 ═════════════ */
+/* ═════════════ 공통 조각 ═════════════ */
 function priceHTML(it, big) {
   const approx = it.cur && it.cur !== 'KRW';
   const pct = it.o && it.o > it.p ? Math.round((1 - it.p / it.o) * 100) : 0;
-  const dn = dropOf(it);
-  if (!it.k) return `<div class="price${big ? ' d-price' : ''}"><span class="approx">가격 미입력</span></div>`;
+  const sv = S.saved[it.id];
+  const d = sv && sv.k && it.k ? Math.round((it.k - sv.k) / 100) * 100 : 0;
+  if (!it.k) return `<div class="price${big ? ' d-price' : ''}"><span class="approx">가격 모름</span></div>`;
   return `<div class="price${big ? ' d-price' : ''}">
     <span class="now">${approx ? '<span class="approx">약 </span>' : ''}${won(it.k)}<small>원</small></span>
     ${pct >= 5 ? `<span class="pct">-${pct}%</span>` : ''}
-    ${dn ? `<span class="dn">▼${won(dn)}</span>` : ''}
+    ${d < 0 ? `<span class="dn">▼${won(-d)}</span>` : d > 0 ? `<span class="up">▲${won(d)}</span>` : ''}
   </div>`;
 }
-function badgesHTML(it) {
-  const b = [];
-  if (S.closet[it.id]) b.push('<span class="bd own">보유</span>');
-  if (!it.a && !it.custom) b.push(`<span class="bd out">${it.gone ? '판매 종료' : '품절'}</span>`);
-  else if (isNew(it) && !it.custom) b.push('<span class="bd new">NEW</span>');
-  return b.length ? `<div class="badges">${b.join('')}</div>` : '';
+function imgTag(it, w, extra = '') {
+  return `<img src="${esc(sizedImg(it.i, w))}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-full="${esc(it.i)}" ${extra}>`;
 }
 function cardHTML(it) {
-  const w = !!S.wish[it.id];
+  const w = !!S.saved[it.id];
   return `<article class="card">
-    <button class="ph${it.a || it.custom ? '' : ' gone'}" data-act="open" data-id="${esc(it.id)}" aria-label="${esc(it.b)} ${esc(it.t)} 자세히 보기">
-      <img src="${esc(sizedImg(it.i, 480))}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-full="${esc(it.i)}">
-      ${badgesHTML(it)}
+    <button class="ph${it.a ? '' : ' gone'}" data-act="open" data-id="${esc(it.id)}" aria-label="${esc(it.b)} ${esc(it.t)} 자세히 보기">
+      ${imgTag(it, 480)}
+      ${!it.a ? '<div class="badges"><span class="bd out">품절</span></div>' : ''}
     </button>
-    <button class="pin" data-act="wish" data-id="${esc(it.id)}" aria-pressed="${w}" aria-label="찜">${IC.heart}</button>
+    <button class="pin" data-act="save" data-id="${esc(it.id)}" aria-pressed="${w}" aria-label="모음에 담기">${IC.heart}</button>
     <div class="tag">
-      <div class="brand">${esc(it.b)}${it.st && it.st.name !== it.b ? `<small>${esc(it.st.name)}</small>` : it.mall ? `<small>${esc(it.mall)}</small>` : ''}</div>
+      <div class="brand">${esc(it.b)}${it.st && it.st.name !== it.b ? `<small>${esc(it.st.name)}</small>` : ''}</div>
       <div class="title">${esc(it.t)}</div>
       ${priceHTML(it)}
       ${runHTML(it)}
     </div>
   </article>`;
 }
+function pinHTML(it) {
+  const s = srcOf(it);
+  return `<article class="pin2">
+    <button class="pimg${it.ar ? ' fix' : ''}" data-act="open" data-id="${esc(it.id)}" aria-label="${esc(it.b)} ${esc(it.t)}"${it.ar ? ` style="aspect-ratio:${it.ar}"` : ''}>
+      ${imgTag(it, 480)}
+      <span class="mtag ${s}">${esc(srcLabel(it))}</span>
+    </button>
+    <div class="tag">
+      <div class="brand">${esc(it.b)}</div>
+      <div class="title">${esc(it.t)}</div>
+      ${priceHTML(it)}
+    </div>
+  </article>`;
+}
+/* 사진이 안 열리면: 원본 크기 → 이미지 프록시 순서로 다시 시도 */
 document.addEventListener('error', (e) => {
   const im = e.target;
-  if (im.tagName !== 'IMG') return;
-  if (im.dataset.full && im.src !== im.dataset.full && !im.dataset.retried) { im.dataset.retried = 1; im.src = im.dataset.full; }
+  if (im.tagName !== 'IMG' || !im.dataset.full) return;
+  const step = +(im.dataset.retried || 0);
+  if (step === 0 && im.src !== im.dataset.full) { im.dataset.retried = 1; im.src = im.dataset.full; }
+  else if (step <= 1 && !im.dataset.full.startsWith('data:')) { im.dataset.retried = 2; im.src = corsURL(im.dataset.full, 600); }
   else im.style.visibility = 'hidden';
 }, true);
 
 let toastT = 0;
-function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2400); }
+function toast(msg, ms = 2400) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms); }
 
 /* ═════════════ 시트 ═════════════ */
 let ignorePop = false;
-function openSheet(title, body, foot = '') {
+function openSheet(title, body, foot = '', full = false) {
   const w = document.createElement('div');
   w.className = 'sheet-wrap';
-  w.innerHTML = `<div class="scrim" data-act="close"></div><section class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+  w.innerHTML = `<div class="scrim" data-act="close"></div><section class="sheet${full ? ' full' : ''}" role="dialog" aria-modal="true" aria-label="${esc(title)}">
     <div class="sh-head"><h2>${esc(title)}</h2><button class="x" data-act="close" aria-label="닫기">${IC.x}</button></div>
     <div class="sh-body">${body}</div>${foot ? `<div class="sh-foot">${foot}</div>` : ''}</section>`;
   document.body.appendChild(w);
@@ -588,24 +530,485 @@ function openSheet(title, body, foot = '') {
   try { history.pushState({ sheet: 1 }, ''); } catch { /* 무시 */ }
   return w;
 }
-function topSheet() { const a = $$('.sheet-wrap'); return a[a.length - 1] || null; }
+function topSheet() { const a = $$('.sheet-wrap').filter((x) => !x.dataset.dead); return a[a.length - 1] || null; }
 function closeSheet(fromPop) {
   const w = topSheet();
   if (!w) return;
   w.classList.remove('on');
   w.dataset.dead = 1;
   setTimeout(() => w.remove(), 190);
-  if ($$('.sheet-wrap').filter((x) => !x.dataset.dead).length === 0) document.body.classList.remove('lock');
+  if (!topSheet()) document.body.classList.remove('lock');
   if (!fromPop) { ignorePop = true; try { history.back(); } catch { ignorePop = false; } }
   if (w._onclose) w._onclose();
 }
 window.addEventListener('popstate', () => {
   if (ignorePop) { ignorePop = false; return; }
-  if ($$('.sheet-wrap').some((x) => !x.dataset.dead)) closeSheet(true);
+  if (topSheet()) closeSheet(true);
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && topSheet()) closeSheet(); });
 
-/* ═════════════ 화면: 추천 ═════════════ */
+/* ═════════════ 담기 ═════════════ */
+function snapOf(it) { return { t: it.t, b: it.b, i: it.i, url: it.url, k: it.k, p: it.p, c: it.c, sc: it.sc, cur: it.cur, col: it.col, mall: it.st ? it.st.name : it.mall, ar: it.ar }; }
+function syncSaveUI(id) {
+  for (const b of $$('[data-act="save"]')) if (b.dataset.id === id) b.setAttribute('aria-pressed', !!S.saved[id]);
+  const n = Object.keys(S.saved).length, c = $('#saveCnt');
+  c.textContent = n; c.classList.toggle('hide', !n);
+}
+function toggleSave(id) {
+  const it = getItem(id);
+  if (!it) return;
+  if (S.saved[id]) { delete S.saved[id]; toast('모음에서 뺐어요'); }
+  else { S.saved[id] = { at: Date.now(), k: it.k, p: it.p, snap: snapOf(it) }; toast('모음에 담았어요'); }
+  save(); syncSaveUI(id);
+}
+function removeItem(id) {
+  delete S.saved[id]; delete S.custom[id];
+  for (const b of S.boards) b.pieces = b.pieces.filter((p) => p.item !== id);
+  save(); syncSaveUI(id);
+}
+
+/* ═════════════ 링크에서 사진·이름·가격 가져오기 ═════════════ */
+function guessCat(t) {
+  const s = fold(t);
+  const R = [['shoes', /sneaker|shoe|boot|loafer|sandal|dunk|jordan|air force|air max|samba|gazelle|스니커|신발|부츠|로퍼|샌들|운동화|슬리퍼|덩크|조던|포스|삼바/], ['bag', /\bbag|backpack|tote|가방|백팩|토트|크로스백|숄더백/], ['head', /\bcap\b|\bhat\b|beanie|모자|볼캡|비니|버킷/], ['bottom', /pant|trouser|jean|short|skirt|jogger|slack|팬츠|바지|청바지|쇼츠|스커트|슬랙스|치마|데님/], ['outer', /jacket|coat|parka|puffer|blouson|windbreaker|vest|fleece|zip-?up|자켓|재킷|코트|패딩|점퍼|바람막이|조끼|플리스|후리스|블루종|아우터|집업/], ['top', /tee|shirt|hood|sweat|knit|cardigan|polo|jersey|티셔츠|셔츠|후드|맨투맨|니트|가디건|긴팔|반팔|스웨터/], ['acc', /sock|belt|scarf|glove|wallet|양말|벨트|머플러|장갑|지갑|목걸이|반지|키링/]];
+  for (const [c, re] of R) if (re.test(s)) return c;
+  return 'top';
+}
+function guessColors(t) {
+  const s = fold(t), out = [];
+  const R = { black: /black|블랙|검정/, white: /white|화이트|흰/, cream: /cream|ivory|ecru|크림|아이보리/, grey: /gr[ae]y|charcoal|그레이|회색|차콜/, navy: /navy|네이비/, blue: /blue|블루|파랑|데님/, green: /green|그린|초록/, khaki: /khaki|olive|카키|올리브/, beige: /beige|sand|베이지|샌드/, brown: /brown|브라운|갈색/, red: /\bred\b|burgundy|레드|빨강|버건디/, pink: /pink|핑크/, purple: /purple|퍼플|보라/, yellow: /yellow|옐로|노랑/, orange: /orange|오렌지/ };
+  for (const [c, re] of Object.entries(R)) if (re.test(s)) out.push(c);
+  return out.slice(0, 2);
+}
+function mallOf(url) { try { const h = new URL(url).hostname.replace(/^(www|m|shop|display|store)\./, ''); for (const [k, n] of Object.entries(HOSTNAME)) if (h.endsWith(k)) return n; return h; } catch { return ''; } }
+const firstURL = (text) => (String(text || '').match(/https?:\/\/[^\s<>"']+/i) || [''])[0];
+const dec = (s) => { const t = document.createElement('textarea'); t.innerHTML = String(s || ''); return t.value; };
+const timeoutSignal = (ms) => { if (AbortSignal.timeout) return AbortSignal.timeout(ms); const c = new AbortController(); setTimeout(() => c.abort(), ms); return c.signal; };
+function shape(meta, url, content = '') {
+  const g = (k) => { const v = meta[k]; return dec(Array.isArray(v) ? v[0] : v).trim(); };
+  const mall = mallOf(g('og:url') || url) || g('og:site_name');
+  let t = g('og:title') || g('twitter:title') || g('title');
+  let b = g('product:brand');
+  let sub = '';
+  t = t.split(/\s[|｜]\s/)[0].replace(/\s[-–]\s(사이즈|후기|상품).*$/i, '').trim();
+  if (mall === 'KREAM') { sub = g('title').replace(/\s*정품.*$|\s*[|｜].*$/g, '').trim(); if (sub === t) sub = ''; }
+  const bm = t.match(/^(.{1,30}?)\(([A-Za-z0-9 .&'’+-]{2,34})\)\s+(.+)$/);
+  if (bm) { if (!b) b = bm[1]; t = bm[3]; }
+  else if (b && t.startsWith(b + ' ')) t = t.slice(b.length + 1);
+  const n = (v) => +String(v || '').replace(/[^\d.]/g, '') || 0;
+  let k = n(g('product:price:amount'));
+  if (g('product:price:currency') && g('product:price:currency') !== 'KRW') k = 0;
+  if (!k) { const pm = `${g('og:description')} ${g('description')}`.match(/([1-9]\d{0,2}(?:,\d{3})+)\s*원?/); if (pm) k = n(pm[1]); }
+  const o = n(g('product:price:normal_price'));
+  const rm = content.match(/발매가\s*([\d,]+)\s*원/);
+  return { t, b, sub, mall, i: g('og:image') || g('twitter:image'), k, o: o > k ? o : 0, rk: rm ? n(rm[1]) : 0, sold: /품절|sold ?out/i.test(g('product:availability')) };
+}
+async function unfurl(url) {
+  // 1) 페이지를 대신 읽어 주는 공개 리더 (무신사·크림 모두 확인됨)
+  try {
+    const r = await fetch('https://r.jina.ai/' + url, { headers: { Accept: 'application/json' }, signal: timeoutSignal(25000) });
+    const d = (await r.json()).data;
+    if (d && d.metadata) { const s = shape({ title: d.title, description: d.description, ...d.metadata }, d.url || url, d.content || ''); if (s.t && s.i) return s; }
+  } catch { /* 다음 방법으로 */ }
+  // 2) 페이지 원문을 받아 메타 정보만 읽기
+  const r = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url), { signal: timeoutSignal(20000) });
+  const html = await r.text();
+  const meta = {};
+  const re = /<meta[^>]+>/gi; let m;
+  while ((m = re.exec(html))) {
+    const key = (m[0].match(/(?:property|name)=["']([^"']+)["']/i) || [])[1], val = (m[0].match(/content=["']([^"']*)["']/i) || [])[1];
+    if (key && val && !(key in meta)) meta[key] = val;
+  }
+  meta.title = (html.match(/<title[^>]*>([^<]*)<\/title>/i) || [])[1] || '';
+  const s = shape(meta, url, '');
+  if (!s.t) throw new Error('no meta');
+  return s;
+}
+function fileToDataURL(file, max = 520) {
+  return new Promise((res, rej) => {
+    const im = new Image(), u = URL.createObjectURL(file);
+    im.onload = () => { const r = Math.min(1, max / Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width * r); c.height = Math.round(im.height * r); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u); res(c.toDataURL('image/jpeg', 0.8)); };
+    im.onerror = () => { URL.revokeObjectURL(u); rej(new Error('img')); };
+    im.src = u;
+  });
+}
+let draft = null;
+function openAdd(prefill = '') {
+  draft = { url: firstURL(prefill), t: '', b: '', sub: '', i: '', k: 0, o: 0, rk: 0, c: 'top', mall: '', busy: false, msg: '', ar: 0 };
+  const body = () => `
+    <div class="fs"><h3>상품 주소 <span>무신사·크림 앱의 공유 → 링크 복사</span></h3>
+      <div class="row"><label class="field grow"><input id="a-url" type="url" inputmode="url" placeholder="https://" value="${esc(draft.url)}" autocomplete="off"></label><button class="btn ink" data-act="a-paste">붙여넣기</button></div>
+      <div class="row" style="margin-top:8px"><button class="btn wide" data-act="a-fetch"${draft.busy ? ' disabled' : ''}>${draft.busy ? '가져오는 중이에요' : '사진·이름·가격 가져오기'}</button></div>
+      ${draft.msg ? `<p class="note" style="margin-top:8px">${esc(draft.msg)}</p>` : ''}</div>
+    <div class="fs"><h3>사진</h3><div class="prev">
+      <div class="th">${draft.i ? `<img id="a-img" src="${esc(draft.i)}" data-full="${esc(draft.i)}" alt="" referrerpolicy="no-referrer">` : ''}</div>
+      <div class="grow"><label class="btn sm" style="cursor:pointer">내 사진에서 고르기<input id="a-file" type="file" accept="image/*" hidden></label><p class="note" style="margin-top:8px">주소로 가져오면 자동으로 채워져요.</p></div></div></div>
+    <div class="fs"><h3>이름</h3><label class="field"><input id="a-t" value="${esc(draft.t)}" placeholder="예: 와플 오버핏 후드집업"></label></div>
+    <div class="fs"><h3>브랜드</h3><label class="field"><input id="a-b" value="${esc(draft.b)}" placeholder="예: 나이키"></label></div>
+    <div class="fs"><h3>가격 <span>${draft.mall === 'KREAM' ? '크림은 즉시 구매가' : '모르면 비워 두세요'}</span></h3><label class="field"><input id="a-k" inputmode="numeric" value="${draft.k ? draft.k : ''}" placeholder="59000"><span>원</span></label></div>
+    <div class="fs"><h3>종류</h3><div class="chips wrapx">${CATS.slice(1, 8).map(([id, n]) => `<button class="chip" data-act="a-cat" data-v="${id}" aria-pressed="${draft.c === id}">${n}</button>`).join('')}</div></div>`;
+  const w = openSheet('링크로 옷 담기', body(), `<button class="btn pri" data-act="a-save">모음에 담기</button>`);
+  w._rerender = () => { const b = $('.sh-body', w), y = b.scrollTop; b.innerHTML = body(); b.scrollTop = y; };
+  w._sync = () => { for (const [k, id] of [['t', '#a-t'], ['b', '#a-b']]) { const el = $(id, w); if (el) draft[k] = el.value.trim(); } const u = $('#a-url', w); if (u) draft.url = firstURL(u.value) || u.value.trim(); const kk = $('#a-k', w); if (kk) draft.k = +String(kk.value).replace(/[^\d]/g, '') || 0; };
+  if (draft.url) addFetch();
+}
+async function addPaste() {
+  const w = topSheet();
+  try {
+    const text = await navigator.clipboard.readText();
+    const u = firstURL(text);
+    if (!u) { draft.msg = '복사해 둔 내용에 주소가 없어요. 쇼핑몰 앱에서 공유 → 링크 복사를 먼저 해 주세요.'; w._rerender(); return; }
+    draft.url = u; w._rerender(); addFetch();
+  } catch { draft.msg = '붙여넣기 권한이 없어요. 주소 칸을 길게 눌러 직접 붙여넣어 주세요.'; w._rerender(); }
+}
+async function addFetch() {
+  const w = topSheet(); w._sync();
+  if (!/^https?:\/\//i.test(draft.url)) { draft.msg = 'https:// 로 시작하는 상품 주소를 넣어 주세요.'; w._rerender(); return; }
+  draft.busy = true; draft.msg = ''; w._rerender();
+  try {
+    const d = await unfurl(draft.url);
+    Object.assign(draft, { t: d.t || draft.t, b: d.b || draft.b, sub: d.sub, i: d.i || draft.i, k: d.k || draft.k, o: d.o, rk: d.rk, mall: d.mall || mallOf(draft.url), c: guessCat(`${d.t} ${d.sub}`) });
+    draft.msg = d.i ? '가져왔어요. 틀린 곳이 있으면 고친 뒤 담아 주세요.' : '사진은 못 가져왔어요. 사진을 직접 골라 주세요.';
+  } catch { draft.msg = '이 주소는 자동으로 못 가져왔어요. 이름과 사진을 직접 넣어 주세요.'; draft.mall = mallOf(draft.url); }
+  draft.busy = false;
+  if (topSheet() === w) w._rerender();
+}
+function addSave() {
+  const w = topSheet(); w._sync();
+  if (!draft.t) { draft.msg = '이름을 적어 주세요.'; w._rerender(); return; }
+  if (!draft.i) { draft.msg = '사진이 있어야 모음과 보드에 보여요. 주소로 가져오거나 사진을 골라 주세요.'; w._rerender(); return; }
+  const im = $('#a-img', w);
+  const ar = im && im.naturalWidth ? +(im.naturalWidth / im.naturalHeight).toFixed(3) : 0;
+  const id = uid('c:');
+  const url = /^https?:/i.test(draft.url) ? draft.url : '';
+  const it = { id, custom: 1, t: draft.t, sub: draft.sub || '', b: draft.b || draft.mall || '내 옷', c: draft.c, sc: '', g: 'u', k: draft.k, p: draft.k, i: draft.i, url, mall: draft.mall || (url ? mallOf(url) : '내 사진'), col: guessColors(`${draft.t} ${draft.sub}`), d: TODAY, ar: clamp(ar, 0.5, 1.6) || 0 };
+  if (draft.o) it.o = draft.o;
+  if (draft.rk) it.rk = draft.rk;
+  S.custom[id] = it;
+  S.saved[id] = { at: Date.now(), k: it.k, p: it.p, snap: snapOf(it) };
+  save(); closeSheet(); syncSaveUI(id); route();
+  toast('모음에 담았어요');
+}
+/* 담아둔 링크 상품의 가격을 다시 확인 */
+let refreshing = false;
+async function refreshPrices(ids) {
+  if (refreshing) return;
+  const list = (ids || Object.keys(S.saved)).map((id) => S.custom[id]).filter((c) => c && c.url);
+  if (!list.length) { toast('가격을 다시 볼 수 있는 링크 상품이 없어요'); return; }
+  refreshing = true;
+  let done = 0, changed = 0;
+  for (const c of list) {
+    toast(`가격 확인 중 ${++done}/${list.length}`, 20000);
+    try {
+      const d = await unfurl(c.url);
+      if (d.k && d.k !== c.k) { c.k = d.k; c.p = d.k; changed++; }
+      if (d.o) c.o = d.o; if (d.rk) c.rk = d.rk;
+      c.chk = TODAY;
+    } catch { /* 이번엔 건너뜀 */ }
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  refreshing = false; save(); route(true);
+  toast(changed ? `${changed}개 가격이 바뀌었어요` : '바뀐 가격이 없어요');
+}
+
+/* ═════════════ 화면: 모음 ═════════════ */
+let homeSrc = 'all', homeQ = '';
+function mallLinks(q, cls = 'chip go') {
+  const enc = encodeURIComponent(q.trim());
+  return MALLS.filter((m) => S.malls.includes(m[0])).map((m) => `<a class="${cls} mallgo" data-mall="${m[0]}" href="${esc(enc ? m[2](enc) : m[3])}" target="_blank" rel="noopener">${m[1]}${IC.out}</a>`).join('');
+}
+function masonryHTML(list) {
+  const cols = window.innerWidth >= 1100 ? 5 : window.innerWidth >= 860 ? 4 : window.innerWidth >= 600 ? 3 : 2;
+  const buckets = Array.from({ length: cols }, () => ({ h: 0, html: [] }));
+  for (const it of list) { // 사진 비율로 높이를 어림해 가장 짧은 열에 넣는다
+    const col = buckets.reduce((m, x) => (x.h < m.h ? x : m), buckets[0]);
+    col.html.push(pinHTML(it)); col.h += (it.ar ? 1 / it.ar : 1.25) + 0.45;
+  }
+  return `<div class="masonry">${buckets.map((b) => `<div class="mcol">${b.html.join('')}</div>`).join('')}</div>`;
+}
+function viewHome() {
+  const v = $('#view');
+  const all = Object.keys(S.saved).map(getItem).filter(Boolean).sort((a, b) => S.saved[b.id].at - S.saved[a.id].at);
+  const cnt = { mu: 0, kr: 0, st: 0, etc: 0 };
+  for (const it of all) cnt[srcOf(it)]++;
+  if (homeSrc !== 'all' && !cnt[homeSrc]) homeSrc = 'all';
+  const list = homeSrc === 'all' ? all : all.filter((it) => srcOf(it) === homeSrc);
+  const chip = (id, label, n) => (id === 'all' || n ? `<button class="chip" data-act="hsrc" data-v="${id}" aria-pressed="${homeSrc === id}">${label}${id === 'all' ? '' : ` <span class="num" style="opacity:.55">${n}</span>`}</button>` : '');
+  const links = all.filter((x) => x.custom && x.url).length;
+  v.innerHTML = `
+    <div class="find">
+      <label class="field">${IC.search}<input id="hq" type="search" enterkeyhint="search" placeholder="찾을 옷 이름을 적고 아래 쇼핑몰을 누르세요" value="${esc(homeQ)}" autocomplete="off"></label>
+      <div class="chips" id="hmalls">${mallLinks(homeQ)}</div>
+      <p class="hint">마음에 드는 옷을 찾으면 그 앱에서 <b>공유 → 링크 복사</b> 한 뒤 아래 버튼을 누르세요.</p>
+    </div>
+    <button class="btn pri wide" data-act="add-link" style="margin-top:10px">${IC.plus}복사한 링크로 옷 담기</button>
+    <h1 class="lead">${all.length ? `담아둔 옷 ${all.length}벌` : '아직 담은 옷이 없어요'}</h1>
+    ${all.length ? `<div class="chips" style="margin-bottom:14px">${chip('all', '전체')}${chip('mu', '무신사', cnt.mu)}${chip('kr', 'KREAM', cnt.kr)}${chip('st', '스토어', cnt.st)}${chip('etc', '그 밖', cnt.etc)}</div>
+      ${masonryHTML(list)}
+      <div class="row" style="margin-top:22px;flex-wrap:wrap">${links ? `<button class="btn sm" data-act="refresh">가격 다시 확인</button>` : ''}<a class="btn sm" href="#boards">보드로 정리하기</a></div>`
+    : `<div class="empty"><h3>무신사·크림에서 본 옷을 여기에 모아요</h3><ol><li>무신사나 크림 앱에서 옷을 연다</li><li>공유 버튼 → 링크 복사</li><li>여기로 돌아와 ‘복사한 링크로 옷 담기’</li></ol><p>사진, 이름, 가격이 자동으로 채워져요. 모은 옷은 보드 탭에서 한 장으로 정리할 수 있어요.</p></div>`}`;
+}
+
+/* ═════════════ 상품 상세 ═════════════ */
+function searchQueryFor(it) { return (it.sub || `${it.b} ${it.t}`).replace(/\s+-\s+.*$/, '').replace(/[()[\]]/g, ' ').split(/\s+/).filter(Boolean).slice(0, 6).join(' '); }
+function openProduct(id) {
+  const it = getItem(id);
+  if (!it) return;
+  const pct = it.o && it.o > it.p ? Math.round((1 - it.p / it.o) * 100) : 0;
+  const approx = it.cur && it.cur !== 'KRW';
+  const native = approx ? new Intl.NumberFormat('ko-KR', { style: 'currency', currency: it.cur, maximumFractionDigits: 2 }).format(it.p) : '';
+  const ms = mySize(it), sv = S.saved[id];
+  const imgs = [it.i, it.i2].filter(Boolean);
+  const q = searchQueryFor(it);
+  const body = `
+    <div class="gal${imgs.length > 1 ? ' two' : ''}">${imgs.map((u) => `<img src="${esc(sizedImg(u, 900))}" data-full="${esc(u)}" alt="${esc(it.t)}" referrerpolicy="no-referrer">`).join('')}</div>
+    <div class="d-brand">${esc(it.b)}</div>
+    <h3 class="d-title">${esc(it.t)}</h3>
+    ${it.sub ? `<p class="d-sub" style="margin:0 0 6px">${esc(it.sub)}</p>` : ''}
+    ${priceHTML(it, true)}
+    ${it.custom && it.mall === 'KREAM' && it.k ? `<p class="d-sub">크림 즉시 구매가예요.${it.rk ? ` 발매가는 ${won(it.rk)}원.` : ''}</p>` : ''}
+    ${pct >= 5 && !approx ? `<p class="d-sub">정가 ${won(it.o)}원에서 ${pct}% 할인 중</p>` : ''}
+    ${approx ? `<p class="d-sub">현지가 ${esc(native)} 기준 환산이에요. 해외 배송비와 관부가세는 따로 들어요.</p>` : ''}
+    ${it.z && it.z.length ? `${runHTML(it, true)}<p class="d-sub">${ms === 'yes' ? '파란 칸이 내 사이즈예요. 지금 재고가 있어요.' : ms === 'no' ? '내 사이즈는 지금 재고가 없어요.' : '줄이 그어진 사이즈는 품절이에요.'}</p>` : ''}
+    <dl class="kv">
+      <div><dt>파는 곳</dt><dd>${esc(srcLabel(it))}${it.st && !it.kr ? ' (해외)' : ''}</dd></div>
+      ${sv && sv.k && it.k && sv.k !== it.k ? `<div><dt>담았을 때 가격</dt><dd class="num">${won(sv.k)}원</dd></div>` : ''}
+      ${it.chk ? `<div><dt>가격 확인한 날</dt><dd class="num">${esc(it.chk)}</dd></div>` : ''}
+    </dl>
+    <div class="malls"><p>같은 옷을 다른 곳에서 찾아보기</p><div class="chips">${mallLinks(q)}</div></div>
+    <div class="linkrow">
+      ${sv ? `<button class="btn sm" data-act="to-board" data-id="${esc(id)}">보드에 넣기</button>` : ''}
+      ${it.custom && it.url ? `<button class="btn sm" data-act="refresh-one" data-id="${esc(id)}">가격 다시 확인</button>` : ''}
+      ${it.custom ? `<button class="btn sm" data-act="del-item" data-id="${esc(id)}">${IC.trash}삭제</button>` : ''}
+    </div>`;
+  const foot = `${it.custom ? '' : `<button class="btn fix" data-act="save" data-id="${esc(id)}" aria-pressed="${!!sv}" aria-label="모음에 담기"><span class="pin" style="position:static;background:none">${IC.heart}</span></button>`}
+    ${it.url ? `<a class="btn pri" href="${esc(it.url)}" target="_blank" rel="noopener">${esc(srcLabel(it))}에서 보기</a>` : '<span class="btn" style="border-color:transparent">내 사진으로 추가한 옷</span>'}`;
+  openSheet(it.custom ? it.mall || '담은 옷' : SUBS[it.sc] || CATNAME[it.c] || '상품', body, foot);
+}
+
+/* ═════════════ 화면: 보드 ═════════════ */
+const BGS = ['#FFFFFF', '#F6F6F3', '#ECECE7', '#111111', '#1F33E0', '#F4E409'];
+let ED = null; // 편집 중인 보드 상태
+const cutCache = new Map();
+function loadImage(src) { return new Promise((res, rej) => { const im = new Image(); if (!src.startsWith('data:')) im.crossOrigin = 'anonymous'; im.onload = () => res(im); im.onerror = () => rej(new Error('img')); im.src = src; }); }
+/* 가장자리에서부터 배경색과 비슷한 부분을 지워 옷만 남긴다 (기기 안에서만 처리) */
+async function cutout(url) {
+  if (cutCache.has(url)) return cutCache.get(url);
+  const im = await loadImage(corsURL(url, 700));
+  const W = im.naturalWidth, H = im.naturalHeight;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0);
+  const d = x.getImageData(0, 0, W, H), px = d.data;
+  // 배경색: 네 모서리 평균
+  let r = 0, g = 0, b = 0, n = 0;
+  for (const [cx, cy] of [[1, 1], [W - 2, 1], [1, H - 2], [W - 2, H - 2], [W >> 1, 1], [1, H >> 1], [W - 2, H >> 1]]) { const i = (cy * W + cx) * 4; if (px[i + 3] < 20) continue; r += px[i]; g += px[i + 1]; b += px[i + 2]; n++; }
+  if (!n) { const out = c.toDataURL('image/png'); cutCache.set(url, out); return out; } // 이미 투명 배경
+  r /= n; g /= n; b /= n;
+  const tol = 34, soft = 58;
+  const dist = (i) => Math.max(Math.abs(px[i] - r), Math.abs(px[i + 1] - g), Math.abs(px[i + 2] - b));
+  const seen = new Uint8Array(W * H), stack = [];
+  const push = (p) => { if (!seen[p] && dist(p * 4) <= tol) { seen[p] = 1; stack.push(p); } };
+  for (let i = 0; i < W; i++) { push(i); push((H - 1) * W + i); }
+  for (let j = 0; j < H; j++) { push(j * W); push(j * W + W - 1); }
+  let removed = 0;
+  while (stack.length) {
+    const p = stack.pop(); removed++;
+    px[p * 4 + 3] = 0;
+    const xx = p % W, yy = (p / W) | 0;
+    if (xx > 0) push(p - 1); if (xx < W - 1) push(p + 1); if (yy > 0) push(p - W); if (yy < H - 1) push(p + W);
+  }
+  const ratio = removed / (W * H);
+  if (ratio < 0.04 || ratio > 0.93) throw new Error('cut');
+  // 경계 부드럽게: 지워진 칸과 맞닿은, 배경색에 가까운 칸은 반투명으로
+  for (let p = 0; p < W * H; p++) {
+    if (seen[p]) continue;
+    const xx = p % W, yy = (p / W) | 0;
+    const edge = (xx > 0 && seen[p - 1]) || (xx < W - 1 && seen[p + 1]) || (yy > 0 && seen[p - W]) || (yy < H - 1 && seen[p + W]);
+    if (edge) { const dd = dist(p * 4); if (dd < soft) px[p * 4 + 3] = Math.round(255 * clamp((dd - tol * 0.5) / (soft - tol * 0.5), 0.15, 1)); }
+  }
+  x.putImageData(d, 0, 0);
+  const out = c.toDataURL('image/png');
+  cutCache.set(url, out);
+  return out;
+}
+function pieceStyle(p, z) { return `left:${p.x}%;top:${p.y}%;width:${p.w}%;transform:translate(-50%,-50%) rotate(${p.r}deg);z-index:${z + 1}`; }
+function pieceHTML(p, z, sel) {
+  const it = getItem(p.item);
+  if (!it) return '';
+  const src = p.cut && cutCache.has(it.i) ? cutCache.get(it.i) : sizedImg(it.i, 700);
+  return `<div class="pc${sel ? ' sel' : ''}" data-pid="${p.pid}" style="${pieceStyle(p, z)}"><img src="${esc(src)}" data-full="${esc(it.i)}" alt="${esc(it.t)}" draggable="false" referrerpolicy="no-referrer"></div>`;
+}
+function viewBoards() {
+  const v = $('#view');
+  const n = Object.keys(S.saved).length;
+  v.innerHTML = `
+    <h1 class="lead">${S.boards.length ? `보드 ${S.boards.length}개` : '담아둔 옷을 한 장에 모아 보세요'}</h1>
+    <button class="btn ink wide" data-act="board-new"${n ? '' : ' disabled'}>${IC.plus}새 보드 만들기</button>
+    ${!n ? '<p class="note" style="margin-top:8px">먼저 모음 탭에서 옷을 담아 주세요. 담은 옷으로 보드를 만들 수 있어요.</p>' : ''}
+    ${S.boards.length ? `<div class="blist">${S.boards.map((b) => `<div class="bcard">
+        <button class="bthumb" data-act="board-open" data-id="${b.id}" aria-label="${esc(b.name)} 열기" style="background:${esc(b.bg)}">${b.thumb ? `<img src="${b.thumb}" alt="">` : `<div class="stage mini" style="background:${esc(b.bg)}">${b.pieces.map((p, i) => pieceHTML(p, i)).join('')}</div>`}</button>
+        <h3>${esc(b.name)}</h3><p>옷 ${b.pieces.length}벌</p></div>`).join('')}</div>`
+    : (n ? `<div class="empty" style="margin-top:14px"><h3>옷 사진을 한 화면에 올려 정리해요</h3><p>옷을 고르면 자동으로 가지런히 놓아 드려요. 손가락으로 옮기고, 두 손가락으로 크기와 각도를 바꾸고, 사진 한 장으로 저장할 수 있어요.</p></div>` : '')}`;
+}
+function openPicker(onDone) {
+  const all = Object.keys(S.saved).map(getItem).filter((x) => x && x.i).sort((a, b) => S.saved[b.id].at - S.saved[a.id].at);
+  const picked = new Set();
+  const w = openSheet('보드에 넣을 옷 고르기', `<div class="pick">${all.map((x) => `<button data-act="pk" data-id="${esc(x.id)}" aria-pressed="false" aria-label="${esc(x.t)}">${imgTag(x, 300)}</button>`).join('')}</div>`,
+    `<button class="btn pri" data-act="pk-done" disabled>옷을 골라 주세요</button>`);
+  w._pick = (id, el) => { if (picked.has(id)) picked.delete(id); else picked.add(id); el.setAttribute('aria-pressed', picked.has(id)); const b = $('[data-act="pk-done"]', w); b.disabled = !picked.size; b.textContent = picked.size ? `${picked.size}벌 넣기` : '옷을 골라 주세요'; };
+  w._done = () => { const ids = all.filter((x) => picked.has(x.id)).map((x) => x.id); closeSheet(); setTimeout(() => onDone(ids), 30); };
+}
+function arrange(board, ars = {}) {
+  const ps = board.pieces.slice().sort((a, b) => (CATORDER[getItem(a.item)?.c] ?? 9) - (CATORDER[getItem(b.item)?.c] ?? 9));
+  const n = ps.length;
+  if (!n) return;
+  const cols = n <= 1 ? 1 : n <= 4 ? 2 : 3, rows = Math.ceil(n / cols);
+  const cw = 100 / cols, ch = 100 / rows;
+  ps.forEach((p, i) => {
+    const rowN = i >= (rows - 1) * cols ? n - (rows - 1) * cols : cols; // 마지막 줄은 가운데 정렬
+    const col = i % cols, row = (i / cols) | 0;
+    const ar = ars[p.item] || getItem(p.item)?.ar || 0.8;
+    const wByH = (ch * 0.86 * ar * 4) / 3; // 보드가 3:4라서 높이 기준 폭(%) 환산
+    p.w = +Math.min(cw * 0.86, wByH).toFixed(2);
+    p.x = +(((100 - rowN * cw) / 2) + cw * (col + 0.5)).toFixed(2);
+    p.y = +(ch * (row + 0.5)).toFixed(2);
+    p.r = 0;
+  });
+  board.pieces = ps;
+}
+function newBoard(ids) {
+  const b = { id: uid('b'), name: `보드 ${S.boards.length + 1}`, bg: '#FFFFFF', at: Date.now(), pieces: ids.map((id) => ({ pid: uid('p'), item: id, x: 50, y: 50, w: 40, r: 0, cut: false })) };
+  arrange(b);
+  S.boards.unshift(b); save();
+  openEditor(b.id);
+}
+function openEditor(id) {
+  const b = S.boards.find((x) => x.id === id);
+  if (!b) return;
+  ED = { b, sel: null, pts: new Map(), drag: null, pinch: null };
+  const tools = () => {
+    const p = b.pieces.find((x) => x.pid === ED.sel);
+    if (!p) return '<span class="note" style="align-self:center">옷을 누르면 크기·각도·배경을 바꿀 수 있어요</span>';
+    return `<button class="btn sm" data-act="p-size" data-v="1.12">크게</button><button class="btn sm" data-act="p-size" data-v="0.89">작게</button><button class="btn sm" data-act="p-rot" data-v="-10">왼쪽으로</button><button class="btn sm" data-act="p-rot" data-v="10">오른쪽으로</button><button class="btn sm" data-act="p-z" data-v="1">맨 앞으로</button><button class="btn sm" data-act="p-z" data-v="-1">맨 뒤로</button><button class="btn sm" data-act="p-cut" aria-pressed="${!!p.cut}">${p.cut ? '배경 되살리기' : '배경 지우기'}</button><button class="btn sm" data-act="p-del">${IC.trash}빼기</button>`;
+  };
+  const body = `
+    <label class="field" style="margin-bottom:12px"><input id="b-name" value="${esc(b.name)}" maxlength="24" aria-label="보드 이름"></label>
+    <div class="stage" id="stage" style="background:${esc(b.bg)}"></div>
+    <div class="ptools" id="ptools"></div>
+    <div class="etools">
+      <button class="btn sm" data-act="b-add">${IC.plus}옷 추가</button>
+      <button class="btn sm" data-act="b-arrange">가지런히 놓기</button>
+      <button class="btn sm" data-act="b-cutall">배경 모두 지우기</button>
+      <span class="sws" aria-label="배경색">${BGS.map((c) => `<button data-act="b-bg" data-v="${c}" style="background:${c}" aria-pressed="${b.bg === c}" aria-label="배경색 ${c}"></button>`).join('')}</span>
+    </div>
+    <div class="linkrow"><button class="btn sm" data-act="b-del">${IC.trash}이 보드 삭제</button></div>`;
+  const w = openSheet('보드 꾸미기', body, `<button class="btn pri" data-act="b-export">사진 한 장으로 저장</button>`, true);
+  const stage = $('#stage', w);
+  ED.w = w; ED.stage = stage;
+  ED.draw = () => { stage.innerHTML = b.pieces.map((p, i) => pieceHTML(p, i, p.pid === ED.sel)).join(''); $('#ptools', w).innerHTML = tools(); };
+  ED.apply = (p) => { const el = stage.querySelector(`[data-pid="${p.pid}"]`); if (el) el.style.cssText = pieceStyle(p, b.pieces.indexOf(p)); };
+  ED.select = (pid) => { ED.sel = pid; for (const el of $$('.pc', stage)) el.classList.toggle('sel', el.dataset.pid === pid); $('#ptools', w).innerHTML = tools(); };
+  ED.draw();
+  // 이미 '배경 지우기'가 켜진 조각은 다시 계산해서 보여 준다
+  for (const p of b.pieces.filter((x) => x.cut)) applyCut(p, true);
+  const P = ED.pts;
+  const two = () => { const [a, c] = [...P.values()]; return { d: Math.hypot(a.x - c.x, a.y - c.y), a: Math.atan2(c.y - a.y, c.x - a.x) }; };
+  stage.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('.pc');
+    try { stage.setPointerCapture(e.pointerId); } catch { /* 무시 */ }
+    P.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (P.size === 1) {
+      if (el) { ED.select(el.dataset.pid); const p = b.pieces.find((x) => x.pid === ED.sel); ED.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, px: p.x, py: p.y }; }
+      else { ED.select(null); ED.drag = null; }
+    } else if (P.size === 2 && ED.sel) {
+      const p = b.pieces.find((x) => x.pid === ED.sel), t = two();
+      ED.pinch = { d: t.d || 1, a: t.a, w: p.w, r: p.r }; ED.drag = null;
+    }
+    e.preventDefault();
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (!P.has(e.pointerId)) return;
+    P.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const p = b.pieces.find((x) => x.pid === ED.sel);
+    if (!p) return;
+    if (ED.pinch && P.size >= 2) {
+      const t = two();
+      p.w = +clamp(ED.pinch.w * (t.d / ED.pinch.d), 6, 180).toFixed(2);
+      p.r = +(ED.pinch.r + ((t.a - ED.pinch.a) * 180) / Math.PI).toFixed(1);
+      ED.apply(p);
+    } else if (ED.drag && e.pointerId === ED.drag.id) {
+      const rc = stage.getBoundingClientRect();
+      p.x = +clamp(ED.drag.px + ((e.clientX - ED.drag.sx) / rc.width) * 100, -15, 115).toFixed(2);
+      p.y = +clamp(ED.drag.py + ((e.clientY - ED.drag.sy) / rc.height) * 100, -15, 115).toFixed(2);
+      ED.apply(p);
+    }
+  });
+  const end = (e) => { P.delete(e.pointerId); if (P.size < 2) ED.pinch = null; if (!P.size) { ED.drag = null; save(); } };
+  stage.addEventListener('pointerup', end);
+  stage.addEventListener('pointercancel', end);
+  w._onclose = () => { const n = $('#b-name', w); if (n && n.value.trim()) b.name = n.value.trim(); save(); const done = b; ED = null; makeThumb(done).finally(() => { if (current() === 'boards' && !topSheet()) route(true); }); };
+}
+async function applyCut(p, quiet) {
+  const it = getItem(p.item);
+  if (!it) return;
+  try {
+    const src = await cutout(it.i);
+    if (!ED) return;
+    const el = ED.stage.querySelector(`[data-pid="${p.pid}"] img`);
+    if (el && p.cut) el.src = src;
+  } catch {
+    p.cut = false;
+    if (!quiet) toast('이 사진은 배경이 복잡해서 깔끔하게 못 지웠어요');
+    if (ED) $('#ptools', ED.w).innerHTML && ED.select(ED.sel);
+  }
+}
+async function renderBoard(b, W) {
+  const H = Math.round((W * 4) / 3);
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = b.bg || '#fff'; x.fillRect(0, 0, W, H);
+  let missed = 0;
+  for (const p of b.pieces) {
+    const it = getItem(p.item);
+    if (!it) continue;
+    try {
+      const src = p.cut ? await cutout(it.i).catch(() => corsURL(it.i, 900)) : corsURL(it.i, W > 600 ? 900 : 360);
+      const im = await loadImage(src);
+      const w = (p.w / 100) * W, h = w * (im.naturalHeight / im.naturalWidth);
+      x.save(); x.translate((p.x / 100) * W, (p.y / 100) * H); x.rotate((p.r * Math.PI) / 180);
+      x.drawImage(im, -w / 2, -h / 2, w, h); x.restore();
+    } catch { missed++; }
+  }
+  return { canvas: c, missed };
+}
+async function makeThumb(b) {
+  try { const { canvas } = await renderBoard(b, 330); b.thumb = canvas.toDataURL('image/jpeg', 0.72); } catch { delete b.thumb; }
+  save();
+}
+async function exportBoard() {
+  const b = ED.b;
+  if (!b.pieces.length) { toast('보드에 옷이 없어요'); return; }
+  toast('사진을 만드는 중이에요', 15000);
+  let blob, missed;
+  try {
+    const r = await renderBoard(b, 1500); missed = r.missed;
+    blob = await new Promise((res) => r.canvas.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('blob');
+  } catch { toast('사진을 만들지 못했어요. 잠시 뒤 다시 해 주세요.'); return; }
+  toast(missed ? `사진 ${missed}장은 불러오지 못해 빠졌어요` : '사진을 만들었어요');
+  const name = `${b.name.replace(/[\\/:*?"<>|]/g, ' ').trim() || 'moafit-board'}.png`;
+  const file = new File([blob], name, { type: 'image/png' });
+  const url = URL.createObjectURL(blob);
+  const canShare = navigator.canShare && navigator.canShare({ files: [file] });
+  const w = openSheet('완성된 보드', `<img class="shot" src="${url}" alt="${esc(b.name)}"><p class="note" style="margin-top:10px">${canShare ? '아래 버튼을 누르고 ‘이미지 저장’을 고르면 사진 앱에 들어가요.' : '사진을 길게 눌러 저장하거나 아래 버튼으로 내려받으세요.'}</p>`,
+    canShare ? `<button class="btn pri" data-act="b-share">저장·공유</button>` : `<a class="btn pri" href="${url}" download="${esc(name)}">내려받기</a>`);
+  w._share = () => navigator.share({ files: [file] }).catch(() => {});
+  w._onclose = () => setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* ═════════════ 화면: 스토어 ═════════════ */
+const F0 = () => ({ q: '', cat: 'all', sub: '', stores: [], brands: [], max: 0, mysize: false, instock: true, kr: false, colors: [], sort: 'rec' });
+let F = F0();
 let feed = { list: [], shown: 0, io: null };
 function mountFeed(list, hostSel) {
   feed.list = list; feed.shown = 0;
@@ -622,120 +1025,67 @@ function mountFeed(list, hostSel) {
   const sen = $('#sentinel');
   if (sen) { feed.io = new IntersectionObserver((en) => { if (en.some((x) => x.isIntersecting)) more(); }, { rootMargin: '900px' }); feed.io.observe(sen); }
 }
-function stripHTML() {
-  const P = S.profile;
-  const segs = [['상의', P.top], ['하의', P.waist || P.bottomA], ['신발', P.shoe]].filter((x) => x[1]);
-  if (!segs.length) return `<button class="strip empty" data-act="profile"><span>내 사이즈를 알려주면 재고가 남은 옷부터 보여줘요</span><u>입력하기</u></button>`;
-  return `<button class="strip" data-act="profile" aria-label="내 사이즈 수정">${segs.map(([n, v]) => `<span class="seg"><i>${n}</i>${Array(7).fill(`<b>${esc(v)}</b>`).join('')}</span>`).join('')}</button>`;
-}
-function emptyCatalogHTML() {
-  if (LOAD_ERR === 'nometa') return `<div class="empty" style="margin-top:22px"><h3>아직 상품을 모으는 중이에요</h3><p>첫 수집이 끝나면(보통 3~5분) 여기에 옷이 채워져요. 조금 뒤에 새로고침해 주세요.</p><button class="btn sm" data-act="reload">새로고침</button></div>`;
-  return `<div class="empty" style="margin-top:22px"><h3>모인 상품이 없어요</h3><p>스토어 수집이 모두 실패했어요. MY 탭의 수집 현황에서 상태를 확인해 주세요.</p><a class="btn sm" href="#my">수집 현황 보기</a></div>`;
-}
-function viewHome() {
-  const v = $('#view');
-  if (!LOADED) { v.innerHTML = `<h1 class="lead">옷을 불러오는 중이에요</h1><div class="grid">${Array(6).fill('<div class="skel"></div>').join('')}</div>`; return; }
-  if (LOAD_ERR) { v.innerHTML = emptyCatalogHTML(); return; }
-  const P = S.profile, all = scored();
-  const sized = !!(P.top || P.waist || P.bottomA || P.shoe);
-  const fresh = all.filter((x) => x.a && isNew(x));
-  const freshMine = fresh.filter((x) => mySize(x) === 'yes');
-  const who = P.name ? `${esc(P.name)}님` : '내';
-  let lead;
-  if (sized && freshMine.length) lead = `이번 주 신상 중 ${who} 사이즈가 남은 옷 ${won(freshMine.length)}벌`;
-  else if (fresh.length) lead = `이번 주에 새로 들어온 옷 ${won(fresh.length)}벌`;
-  else lead = `${won(all.length)}벌 중에서 ${who} 취향 순으로 골랐어요`;
-  const drops = Object.keys(S.wish).map(getItem).filter((x) => x && !x.gone && wishDelta(x) < 0);
-  const newRail = (sized && freshMine.length >= 4 ? freshMine : fresh).slice(0, 14);
-  const dropRail = all.filter((x) => x.a && dropOf(x)).slice(0, 14);
-  v.innerHTML = `
-    <h1 class="lead">${lead}</h1>
-    ${stripHTML()}
-    ${!P.onboarded ? `<div class="empty" style="margin-top:14px"><h3>취향을 알려주면 추천이 달라져요</h3><p>사이즈, 좋아하는 브랜드와 스타일, 예산을 30초 안에 고를 수 있어요.</p><button class="btn pri sm" data-act="profile">취향 고르기</button></div>` : ''}
-    ${drops.length ? `<div class="sec"><h2>찜한 옷 ${drops.length}개의 가격이 내렸어요</h2><a class="more" href="#wish">찜 보기</a></div><div class="rail">${drops.slice(0, 12).map(cardHTML).join('')}</div>` : ''}
-    ${newRail.length >= 3 ? `<div class="sec"><h2>${sized && freshMine.length >= 4 ? '내 사이즈가 남은 신상' : '새로 들어온 옷'}</h2><button class="more" data-act="go-new">전체 보기</button></div><div class="rail">${newRail.map(cardHTML).join('')}</div>` : ''}
-    ${dropRail.length >= 3 ? `<div class="sec"><h2>최근 가격이 내린 옷</h2><button class="more" data-act="go-drop">전체 보기</button></div><div class="rail">${dropRail.map(cardHTML).join('')}</div>` : ''}
-    <div class="sec"><h2>취향 순</h2><span class="note">찜할수록 정확해져요</span></div>
-    <div class="grid" id="feed"></div><div id="sentinel" style="height:1px"></div>`;
-  mountFeed(all.filter((x) => x.a), '#feed');
-}
-
-/* ═════════════ 화면: 탐색 ═════════════ */
-const F0 = () => ({ q: '', cat: 'all', sub: '', stores: [], brands: [], max: 0, mysize: false, sale: false, drop: false, fresh: false, instock: true, kr: false, colors: [], sort: 'rec' });
-let F = F0();
 function tokenMatch(hay, tok) { return hay.includes(tok) || (SYN[tok] || []).some((s) => hay.includes(s)); }
 function applyFilters() {
   const toks = fold(F.q).split(/\s+/).filter(Boolean);
   const stores = new Set(F.stores), brands = new Set(F.brands), cols = new Set(F.colors);
-  const base = toks.length ? [...ITEMS.filter((x) => !S.hidden[x.id] && x.g !== 'k' || toks.length), ...customItems()] : [...scored()];
-  let list = base.filter((it) => {
-    if (S.hidden[it.id]) return false;
-    if (!toks.length && !fitOK(it)) return false;
+  const list = (toks.length ? ITEMS.filter((x) => x.g !== 'k') : scored()).filter((it) => {
     if (F.cat !== 'all' && it.c !== F.cat) return false;
     if (F.sub && it.sc !== F.sub) return false;
     if (stores.size && !stores.has(it.s)) return false;
     if (brands.size && !brands.has(it.b)) return false;
     if (F.max && it.k > F.max) return false;
     if (F.instock && !it.a) return false;
-    if (F.kr && !it.kr) return false;
-    if (F.sale && !(it.o > it.p)) return false;
-    if (F.drop && !dropOf(it)) return false;
-    if (F.fresh && !isNew(it)) return false;
+    if ((F.kr || !S.profile.global) && !it.kr) return false;
     if (F.mysize && mySize(it) !== 'yes') return false;
     if (cols.size && !(it.col || []).some((c) => cols.has(c))) return false;
     for (const t of toks) if (!tokenMatch(it.hay, t)) return false;
     return true;
   });
-  if (toks.length) for (const it of list) if (it._s === undefined || scoresDirty) it._s = score(it);
-  const by = { rec: (a, b) => b._s - a._s, new: (a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0), low: (a, b) => a.k - b.k, high: (a, b) => b.k - a.k, sale: (a, b) => (b.o ? 1 - b.p / b.o : 0) - (a.o ? 1 - a.p / a.o : 0) }[F.sort];
+  if (toks.length) for (const it of list) it._s = score(it);
+  const by = { rec: (a, b) => b._s - a._s, new: (a, b) => (a.d < b.d ? 1 : a.d > b.d ? -1 : 0), low: (a, b) => a.k - b.k, high: (a, b) => b.k - a.k }[F.sort];
   if (F.sort !== 'rec' || toks.length) list.sort(by);
   return list;
 }
-function activeFilterCount() { return F.stores.length + F.brands.length + F.colors.length + (F.max ? 1 : 0) + (F.mysize ? 1 : 0) + (F.sale ? 1 : 0) + (F.drop ? 1 : 0) + (F.fresh ? 1 : 0) + (F.kr ? 1 : 0) + (F.instock ? 0 : 1) + (F.sub ? 1 : 0); }
-function mallsHTML(q, label) {
-  const enc = encodeURIComponent(q);
-  return `<div class="malls"><p>${label}</p><div class="chips">${MALLS.filter((m) => S.malls.includes(m[0])).map((m) => `<a class="chip" href="${esc(m[2](enc))}" target="_blank" rel="noopener">${m[1]}${IC.out.replace('class="ic"', 'class="ic" style="width:14px;height:14px"')}</a>`).join('')}</div></div>`;
-}
-function viewExplore() {
+function activeFilterCount() { return F.stores.length + F.brands.length + F.colors.length + (F.max ? 1 : 0) + (F.mysize ? 1 : 0) + (F.kr ? 1 : 0) + (F.instock ? 0 : 1) + (F.sub ? 1 : 0); }
+function viewStore() {
   const v = $('#view');
   v.innerHTML = `
     <div class="bar">
       <div class="row">
-        <label class="field grow">${IC.search}<input id="q" type="search" inputmode="search" enterkeyhint="search" placeholder="브랜드, 옷 종류, 색으로 찾기" value="${esc(F.q)}" autocomplete="off"></label>
+        <label class="field grow">${IC.search}<input id="q" type="search" enterkeyhint="search" placeholder="브랜드, 옷 종류, 색으로 찾기" value="${esc(F.q)}" autocomplete="off"></label>
         <button class="btn" data-act="filters" aria-label="필터" style="padding:0 13px;height:46px">${IC.filter}<span id="fcount" class="num"></span></button>
       </div>
       <div class="chips" id="cats">${CATS.map(([id, n]) => `<button class="chip" data-act="cat" data-v="${id}" aria-pressed="${F.cat === id}">${n}</button>`).join('')}</div>
     </div>
     <div id="results"></div>`;
   renderResults();
+  if (!LOADED) ensureCatalog().then(() => { if (current() === 'store') renderResults(); });
 }
 function renderResults() {
   const host = $('#results');
   if (!host) return;
-  if (!LOADED) { host.innerHTML = `<div class="grid">${Array(6).fill('<div class="skel"></div>').join('')}</div>`; return; }
+  if (!LOADED) { host.innerHTML = `<p class="note" style="padding:6px 0 12px">스토어 상품을 불러오는 중이에요</p><div class="grid">${Array(6).fill('<div class="skel"></div>').join('')}</div>`; return; }
+  if (LOAD_ERR) { host.innerHTML = `<div class="empty"><h3>${LOAD_ERR === 'nometa' ? '아직 상품을 모으는 중이에요' : '모인 상품이 없어요'}</h3><p>${LOAD_ERR === 'nometa' ? '첫 수집이 끝나면 여기에 옷이 채워져요. 조금 뒤에 다시 열어 주세요.' : 'MY 탭의 수집 현황에서 스토어 상태를 확인해 주세요.'}</p></div>`; return; }
   const n = activeFilterCount();
   $('#fcount').textContent = n ? n : '';
   const list = applyFilters();
-  const q = F.q.trim();
-  const sorts = [['rec', '취향 순'], ['new', '신상 순'], ['low', '낮은 가격 순'], ['high', '높은 가격 순'], ['sale', '할인율 순']];
+  const sorts = [['rec', '기본 순'], ['new', '최근 등록 순'], ['low', '낮은 가격 순'], ['high', '높은 가격 순']];
   host.innerHTML = `
-    ${q ? mallsHTML(q, `다른 쇼핑몰에서 ‘${esc(q)}’ 검색 결과 바로 보기`) : ''}
-    <div class="meta"><span><b class="num">${won(list.length)}</b>개</span>
+    <div class="meta"><span>공식 스토어 ${Object.keys(STORES).length}곳에서 <b class="num">${won(list.length)}</b>개</span>
       <select id="sort" aria-label="정렬">${sorts.map(([id, n2]) => `<option value="${id}"${F.sort === id ? ' selected' : ''}>${n2}</option>`).join('')}</select></div>
     ${list.length ? '<div class="grid" id="feed"></div><div id="sentinel" style="height:1px"></div>'
-      : `<div class="empty"><h3>모아둔 스토어에는 맞는 옷이 없어요</h3><p>${q ? '위 버튼으로 다른 쇼핑몰의 검색 결과를 바로 열 수 있어요. 마음에 드는 걸 찾으면 링크를 찜에 붙여넣어 보세요.' : '필터를 줄이면 더 많이 볼 수 있어요.'}</p>${n ? '<button class="btn sm" data-act="filters-reset">필터 지우기</button>' : ''}</div>`}`;
+      : `<div class="empty"><h3>여기 스토어에는 맞는 옷이 없어요</h3><p>무신사·크림에서 찾으려면 모음 탭 맨 위 검색을 써 보세요.</p>${n ? '<button class="btn sm" data-act="filters-reset">필터 지우기</button>' : ''}</div>`}`;
   if (list.length) mountFeed(list, '#feed');
 }
 function openFilters() {
-  const brandCount = {};
-  for (const it of ITEMS) if (F.cat === 'all' || it.c === F.cat) brandCount[it.b] = (brandCount[it.b] || 0) + 1;
-  const brands = Object.entries(brandCount).sort((a, b) => b[1] - a[1]).slice(0, 60);
+  const bc = {};
+  for (const it of ITEMS) if (F.cat === 'all' || it.c === F.cat) bc[it.b] = (bc[it.b] || 0) + 1;
+  const brands = Object.entries(bc).sort((a, b) => b[1] - a[1]).slice(0, 60);
   const subs = F.cat === 'all' ? [] : [...new Set(ITEMS.filter((x) => x.c === F.cat).map((x) => x.sc))].filter((x) => SUBS[x]);
   const tog = (k, label) => `<button class="chip" data-act="f-tog" data-k="${k}" aria-pressed="${!!F[k]}">${label}</button>`;
   const body = () => `
-    <div class="fs"><h3>빠른 조건</h3><div class="chips wrapx">
-      ${tog('mysize', '내 사이즈 재고만')}${tog('fresh', '이번 주 신상')}${tog('sale', '세일 중')}${tog('drop', '최근 가격 내림')}${tog('kr', '국내 스토어만')}
-      <button class="chip" data-act="f-tog" data-k="instock" aria-pressed="${!F.instock}">품절 포함</button></div></div>
+    <div class="fs"><h3>조건</h3><div class="chips wrapx">${tog('mysize', '내 사이즈 재고만')}${tog('kr', '국내 스토어만')}<button class="chip" data-act="f-tog" data-k="instock" aria-pressed="${!F.instock}">품절 포함</button></div></div>
     ${subs.length > 1 ? `<div class="fs"><h3>${CATNAME[F.cat]} 종류</h3><div class="chips wrapx">${subs.map((s) => `<button class="chip" data-act="f-sub" data-v="${s}" aria-pressed="${F.sub === s}">${SUBS[s]}</button>`).join('')}</div></div>` : ''}
     <div class="fs"><h3>가격 상한</h3><div class="chips wrapx">${BUDGETS.map(([n, l]) => `<button class="chip" data-act="f-max" data-v="${n}" aria-pressed="${F.max === n}">${n ? l + ' 이하' : l}</button>`).join('')}</div></div>
     <div class="fs"><h3>색</h3><div class="chips wrapx">${Object.entries(COLORS).map(([id, [n, c]]) => `<button class="chip" data-act="f-arr" data-k="colors" data-v="${id}" aria-pressed="${F.colors.includes(id)}"><span class="sw" style="background:${c}"></span>${n}</button>`).join('')}</div></div>
@@ -744,250 +1094,6 @@ function openFilters() {
   const w = openSheet('필터', body(), `<button class="btn" data-act="filters-reset">모두 지우기</button><button class="btn pri" data-act="close">결과 보기</button>`);
   w._rerender = () => { const b = $('.sh-body', w), y = b.scrollTop; b.innerHTML = body(); b.scrollTop = y; };
   w._onclose = () => renderResults();
-}
-
-/* ═════════════ 상품 상세 ═════════════ */
-function searchQueryFor(it) { return `${it.b} ${it.t}`.replace(/\s+-\s+.*$/, '').replace(/[()[\]]/g, ' ').split(/\s+/).slice(0, 6).join(' '); }
-function openProduct(id) {
-  const it = getItem(id);
-  if (!it) return;
-  if (!it.custom && !it.gone) { learn(it, 'open'); save(); }
-  const why = it.custom || it.gone ? [] : reasons(it);
-  const pct = it.o && it.o > it.p ? Math.round((1 - it.p / it.o) * 100) : 0;
-  const approx = it.cur && it.cur !== 'KRW';
-  const native = approx ? new Intl.NumberFormat('ko-KR', { style: 'currency', currency: it.cur, maximumFractionDigits: 2 }).format(it.p) : '';
-  const ms = mySize(it);
-  const h = it.h && it.h.length > 1 ? it.h : null;
-  const hmax = h ? Math.max(...h.map((x) => x[1])) : 0;
-  const imgs = [it.i, it.i2].filter(Boolean);
-  const body = `
-    <div class="gal${imgs.length > 1 ? ' two' : ''}">${imgs.map((u) => `<img src="${esc(sizedImg(u, 900))}" data-full="${esc(u)}" alt="${esc(it.t)}" referrerpolicy="no-referrer">`).join('')}</div>
-    <div class="d-brand">${esc(it.b)}</div>
-    <h3 class="d-title">${esc(it.t)}</h3>
-    ${priceHTML(it, true)}
-    ${approx ? `<p class="d-sub">현지가 ${esc(native)} 기준 환산이에요. 해외 배송비와 관부가세는 따로 들어요.</p>` : ''}
-    ${pct >= 5 ? `<p class="d-sub">정가 ${approx ? '' : won(it.o) + '원'}에서 ${pct}% 할인 중</p>` : ''}
-    ${it.z && it.z.length ? `${runHTML(it, true)}<p class="d-sub">${ms === 'yes' ? '파란 칸이 내 사이즈예요. 지금 재고가 있어요.' : ms === 'no' ? '내 사이즈는 지금 재고가 없어요.' : '줄이 그어진 사이즈는 품절이에요.'}</p>` : ''}
-    ${why.length ? `<div class="why">${why.map((x) => `<span>${esc(x)}</span>`).join('')}</div>` : ''}
-    ${h ? `<div class="kv"><div><dt>가격 변화</dt><dd class="num">${h.map((x) => won(x[1] * (it.st?.rate || 1))).join(' → ')}원</dd></div></div><div class="hist" aria-hidden="true">${h.map((x) => `<i style="height:${Math.max(8, Math.round((x[1] / hmax) * 100))}%"></i>`).join('')}</div>` : ''}
-    <dl class="kv">
-      ${it.st ? `<div><dt>파는 곳</dt><dd>${esc(it.st.name)}${it.kr ? '' : ' (해외)'}</dd></div>` : it.mall ? `<div><dt>파는 곳</dt><dd>${esc(it.mall)}</dd></div>` : ''}
-      ${it.d && !it.custom ? `<div><dt>등록일</dt><dd class="num">${esc(it.d)}</dd></div>` : ''}
-    </dl>
-    ${mallsHTML(searchQueryFor(it), '같은 옷을 다른 쇼핑몰에서 찾아보기').replace('class="malls"', 'class="malls" style="margin-top:18px"')}
-    <div class="linkrow">
-      <button class="btn sm" data-act="own" data-id="${esc(it.id)}">${S.closet[it.id] ? '옷장에서 빼기' : '이미 갖고 있어요'}</button>
-      ${it.custom ? `<button class="btn sm" data-act="del-custom" data-id="${esc(it.id)}">삭제</button>` : `<button class="btn sm" data-act="hide" data-id="${esc(it.id)}">관심 없어요</button>`}
-    </div>`;
-  const foot = `<button class="btn fix" data-act="wish" data-id="${esc(it.id)}" aria-pressed="${!!S.wish[it.id]}" aria-label="찜"><span class="pin" style="position:static;background:none">${IC.heart}</span></button>
-    ${it.url ? `<a class="btn pri" href="${esc(it.url)}" target="_blank" rel="noopener">${it.gone ? '원래 페이지 열기' : (it.st ? esc(it.st.name) : esc(it.mall || '판매 페이지')) + '에서 보기'}</a>` : '<span class="btn" style="border-color:transparent">링크 없이 추가한 옷</span>'}`;
-  openSheet(SUBS[it.sc] || CATNAME[it.c] || '상품', body, foot);
-}
-
-/* ═════════════ 찜 · 옷장 ═════════════ */
-function snapOf(it) { return { t: it.t, b: it.b, i: it.i, url: it.url, k: it.k, p: it.p, c: it.c, sc: it.sc, cur: it.cur, col: it.col, mall: it.st ? it.st.name : it.mall }; }
-function wishDelta(it) { const w = S.wish[it.id]; if (!w || it.gone || it.custom || w.p == null) return 0; return Math.round((it.p - w.p) * (it.st?.rate || 1) / 100) * 100; }
-function toggleWish(id) {
-  const it = getItem(id);
-  if (!it) return;
-  if (S.wish[id]) { delete S.wish[id]; if (!it.custom) learn(it, 'unwish'); toast('찜에서 뺐어요'); }
-  else { S.wish[id] = { at: Date.now(), k: it.k, p: it.p, snap: snapOf(it) }; if (!it.custom) learn(it, 'wish'); toast('찜했어요. 가격이 내리면 추천 탭 맨 위에 알려줄게요'); }
-  save(); syncWishUI(id);
-}
-function syncWishUI(id) {
-  for (const b of $$(`[data-act="wish"]`)) if (b.dataset.id === id) b.setAttribute('aria-pressed', !!S.wish[id]);
-  const n = Object.keys(S.wish).length, c = $('#wishCnt');
-  c.textContent = n; c.classList.toggle('hide', !n);
-}
-function toggleOwn(id) {
-  const it = getItem(id);
-  if (!it) return;
-  if (S.closet[id]) { delete S.closet[id]; toast('옷장에서 뺐어요'); }
-  else { S.closet[id] = { at: Date.now(), snap: snapOf(it) }; if (!it.custom) learn(it, 'own'); toast('옷장에 넣었어요. 코디 탭에서 조합해 보세요'); }
-  save();
-}
-let wishSort = 'recent';
-function liHTML(it, extra = '') {
-  return `<div class="li">
-    <button class="th" data-act="open" data-id="${esc(it.id)}" aria-label="${esc(it.t)}"><img src="${esc(sizedImg(it.i, 240))}" data-full="${esc(it.i)}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>
-    <div class="bd2">
-      <div class="brand">${esc(it.b)}<small>${esc(it.st ? it.st.name : it.mall || '')}</small></div>
-      <div class="title">${esc(it.t)}</div>
-      ${priceHTML(it)}
-      ${extra}
-    </div></div>`;
-}
-function viewWish() {
-  const v = $('#view');
-  let list = Object.keys(S.wish).map(getItem).filter(Boolean);
-  if (wishSort === 'recent') list.sort((a, b) => S.wish[b.id].at - S.wish[a.id].at);
-  if (wishSort === 'drop') list.sort((a, b) => wishDelta(a) - wishDelta(b));
-  if (wishSort === 'low') list.sort((a, b) => (a.k || 9e9) - (b.k || 9e9));
-  const total = list.filter((x) => !x.gone).reduce((s, x) => s + (x.k || 0), 0);
-  v.innerHTML = `
-    <h1 class="lead">${list.length ? `찜한 옷 ${list.length}벌, 모두 사면 ${won(total)}원` : '찜한 옷이 아직 없어요'}</h1>
-    <div class="row" style="margin-bottom:6px">
-      <button class="btn ink grow" data-act="add-link">${IC.plus}링크로 옷 추가</button>
-      ${list.length ? `<div class="field" style="height:48px;flex:0 0 auto"><select id="wsort" aria-label="정렬"><option value="recent"${wishSort === 'recent' ? ' selected' : ''}>최근 찜한 순</option><option value="drop"${wishSort === 'drop' ? ' selected' : ''}>많이 내린 순</option><option value="low"${wishSort === 'low' ? ' selected' : ''}>낮은 가격 순</option></select></div>` : ''}
-    </div>
-    <p class="note" style="margin-bottom:8px">무신사, 크림처럼 여기 없는 쇼핑몰의 옷도 상품 주소만 붙여넣으면 사진과 이름을 자동으로 가져와요.</p>
-    ${list.length ? `<div class="list">${list.map((it) => {
-      const d = wishDelta(it), ms = mySize(it);
-      const st = it.gone ? '<span class="delta up">스토어에서 내려갔어요</span>' : !it.a && !it.custom ? '<span class="delta up">지금은 품절</span>' : d < 0 ? `<span class="delta dn">찜한 뒤 ${won(-d)}원 내림</span>` : d > 0 ? `<span class="delta up">찜한 뒤 ${won(d)}원 오름</span>` : ms === 'yes' ? '<span class="delta" style="color:var(--cobalt)">내 사이즈 재고 있음</span>' : ms === 'no' ? '<span class="delta up">내 사이즈 품절</span>' : '';
-      return liHTML(it, `${st}<div class="acts">${it.url ? `<a class="btn sm" href="${esc(it.url)}" target="_blank" rel="noopener">사러 가기</a>` : ''}<button class="btn sm" data-act="own" data-id="${esc(it.id)}">${S.closet[it.id] ? '보유 중' : '샀어요'}</button><button class="btn sm" data-act="wish" data-id="${esc(it.id)}" aria-label="찜 해제">${IC.trash.replace('class="ic"', 'class="ic" style="width:17px;height:17px"')}</button></div>`);
-    }).join('')}</div>` : `<div class="empty" style="margin-top:14px"><h3>사진 위 하트를 누르면 여기에 모여요</h3><p>찜한 뒤 가격이 내리거나 내 사이즈가 다시 들어오면 추천 탭 맨 위에 올려 드려요.</p><a class="btn sm" href="#home">추천 보러 가기</a></div>`}`;
-}
-
-/* 링크·사진으로 추가 */
-function guessCat(t) {
-  const s = fold(t);
-  const R = [['shoes', /sneaker|shoe|boot|loafer|sandal|스니커|신발|부츠|로퍼|샌들|운동화|슬리퍼/], ['bag', /\bbag|backpack|tote|가방|백팩|토트|크로스백|숄더백/], ['head', /\bcap\b|\bhat\b|beanie|모자|볼캡|비니|버킷/], ['bottom', /pant|trouser|jean|short|skirt|jogger|slack|팬츠|바지|청바지|쇼츠|스커트|슬랙스|치마/], ['outer', /jacket|coat|parka|puffer|blouson|windbreaker|vest|fleece|자켓|재킷|코트|패딩|점퍼|바람막이|조끼|플리스|후리스|블루종|아우터/], ['top', /tee|shirt|hood|sweat|knit|cardigan|polo|jersey|티셔츠|셔츠|후드|맨투맨|니트|가디건|긴팔|반팔|스웨터/], ['acc', /sock|belt|scarf|glove|wallet|양말|벨트|머플러|장갑|지갑|목걸이|반지|키링/]];
-  for (const [c, re] of R) if (re.test(s)) return c;
-  return 'top';
-}
-function guessColors(t) {
-  const s = fold(t), out = [];
-  const R = { black: /black|블랙|검정/, white: /white|화이트|흰/, cream: /cream|ivory|ecru|크림|아이보리/, grey: /gr[ae]y|charcoal|그레이|회색|차콜/, navy: /navy|네이비/, blue: /blue|블루|파랑|데님/, green: /green|그린|초록/, khaki: /khaki|olive|카키|올리브/, beige: /beige|sand|베이지|샌드/, brown: /brown|브라운|갈색/, red: /\bred\b|burgundy|레드|빨강|버건디/, pink: /pink|핑크/, purple: /purple|퍼플|보라/, yellow: /yellow|옐로|노랑/, orange: /orange|오렌지/ };
-  for (const [c, re] of Object.entries(R)) if (re.test(s)) out.push(c);
-  return out.slice(0, 2);
-}
-function mallOf(url) { try { const h = new URL(url).hostname.replace(/^(www|m|shop|display|store)\./, ''); for (const [k, n] of Object.entries(HOSTNAME)) if (h.endsWith(k)) return n; return h; } catch { return ''; } }
-async function unfurl(url) {
-  const r = await fetch('https://api.microlink.io/?url=' + encodeURIComponent(url));
-  const j = await r.json();
-  if (j.status !== 'success' || !j.data) throw new Error('no data');
-  const d = j.data;
-  let t = String(d.title || '').split(/\s[|｜]\s/)[0].replace(/\s[-–]\s(사이즈|후기|상품|무신사|KREAM|29CM).*$/i, '').trim();
-  let b = '';
-  const m = t.match(/^(.{1,28}?\([A-Za-z0-9 .&'’-]{2,28}\))\s+(.+)$/) || t.match(/^\[([^\]]{1,28})\]\s*(.+)$/);
-  if (m) { b = m[1]; t = m[2]; }
-  const pm = `${d.description || ''} ${d.title || ''}`.match(/([1-9]\d{0,2}(?:,\d{3})+)\s*원/);
-  return { t, b, i: d.image?.url || '', k: pm ? +pm[1].replace(/,/g, '') : 0 };
-}
-function fileToDataURL(file, max = 420) {
-  return new Promise((res, rej) => {
-    const im = new Image(), u = URL.createObjectURL(file);
-    im.onload = () => { const r = Math.min(1, max / Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width * r); c.height = Math.round(im.height * r); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u); res(c.toDataURL('image/jpeg', 0.78)); };
-    im.onerror = () => { URL.revokeObjectURL(u); rej(new Error('img')); };
-    im.src = u;
-  });
-}
-let draft = null;
-function openAdd(dest) {
-  draft = { dest, url: '', t: '', b: '', i: '', k: 0, c: 'top', busy: false, msg: '' };
-  const body = () => `
-    <div class="fs"><h3>상품 주소 <span>쇼핑몰 앱의 ‘공유 → 링크 복사’</span></h3>
-      <div class="row"><label class="field grow"><input id="a-url" type="url" inputmode="url" placeholder="https://" value="${esc(draft.url)}"></label><button class="btn ink" data-act="a-fetch"${draft.busy ? ' disabled' : ''}>${draft.busy ? '가져오는 중' : '가져오기'}</button></div>
-      ${draft.msg ? `<p class="note" style="margin-top:8px">${esc(draft.msg)}</p>` : ''}</div>
-    <div class="fs"><h3>사진</h3><div class="row" style="align-items:flex-start">
-      <div class="li" style="padding:0;border:0"><div class="th">${draft.i ? `<img src="${esc(draft.i)}" alt="" referrerpolicy="no-referrer">` : ''}</div></div>
-      <div class="grow"><label class="btn sm" style="cursor:pointer">내 사진에서 고르기<input id="a-file" type="file" accept="image/*" hidden></label><p class="note" style="margin-top:8px">주소로 가져오면 자동으로 채워져요. 갖고 있는 옷은 직접 찍은 사진을 써도 돼요.</p></div></div></div>
-    <div class="fs"><h3>이름</h3><label class="field"><input id="a-t" value="${esc(draft.t)}" placeholder="예: 로고 후드 집업 블랙"></label></div>
-    <div class="fs"><h3>브랜드</h3><label class="field"><input id="a-b" value="${esc(draft.b)}" placeholder="예: 커버낫"></label></div>
-    <div class="fs"><h3>가격 <span>모르면 비워 두세요</span></h3><label class="field"><input id="a-k" inputmode="numeric" value="${draft.k ? draft.k : ''}" placeholder="59000"><span>원</span></label></div>
-    <div class="fs"><h3>종류</h3><div class="chips wrapx">${CATS.slice(1, 8).map(([id, n]) => `<button class="chip" data-act="a-cat" data-v="${id}" aria-pressed="${draft.c === id}">${n}</button>`).join('')}</div></div>`;
-  const w = openSheet(dest === 'closet' ? '갖고 있는 옷 추가' : '링크로 옷 추가', body(), `<button class="btn pri" data-act="a-save">${dest === 'closet' ? '옷장에 넣기' : '찜에 추가'}</button>`);
-  w._rerender = () => { const b = $('.sh-body', w), y = b.scrollTop; b.innerHTML = body(); b.scrollTop = y; };
-  w._sync = () => { for (const [k, id] of [['url', '#a-url'], ['t', '#a-t'], ['b', '#a-b']]) { const el = $(id, w); if (el) draft[k] = el.value.trim(); } const kk = $('#a-k', w); if (kk) draft.k = +String(kk.value).replace(/[^\d]/g, '') || 0; };
-}
-async function addFetch() {
-  const w = topSheet(); w._sync();
-  if (!/^https?:\/\//i.test(draft.url)) { draft.msg = 'https:// 로 시작하는 상품 주소를 붙여넣어 주세요.'; w._rerender(); return; }
-  draft.busy = true; draft.msg = ''; w._rerender();
-  try {
-    const d = await unfurl(draft.url);
-    draft.t = d.t || draft.t; draft.b = d.b || draft.b; draft.i = d.i || draft.i; draft.k = d.k || draft.k; draft.c = guessCat(`${d.t}`);
-    draft.msg = d.i ? '가져왔어요. 틀린 곳이 있으면 고친 뒤 추가하세요.' : '사진은 못 가져왔어요. 이름만 확인하고 사진을 직접 골라 주세요.';
-  } catch { draft.msg = '이 주소는 자동으로 못 가져왔어요. 이름과 사진을 직접 넣어 주세요.'; }
-  draft.busy = false;
-  if (topSheet() === w) w._rerender();
-}
-function addSave() {
-  const w = topSheet(); w._sync();
-  if (!draft.t) { draft.msg = '이름을 적어 주세요.'; w._rerender(); return; }
-  if (!draft.i) { draft.msg = '사진이 있어야 코디에 쓸 수 있어요. 주소로 가져오거나 사진을 골라 주세요.'; w._rerender(); return; }
-  const id = 'c:' + Date.now().toString(36);
-  const it = { id, custom: 1, t: draft.t, b: draft.b || mallOf(draft.url) || '내 옷', c: draft.c, sc: '', g: 'u', k: draft.k, p: draft.k, i: draft.i, url: /^https?:/i.test(draft.url) ? draft.url : '', mall: mallOf(draft.url), col: guessColors(draft.t), d: TODAY };
-  S.custom[id] = it;
-  if (draft.dest === 'closet') S.closet[id] = { at: Date.now(), snap: snapOf(it) };
-  else S.wish[id] = { at: Date.now(), k: it.k, p: it.p, snap: snapOf(it) };
-  save(); closeSheet(); syncWishUI(id); route();
-  toast(draft.dest === 'closet' ? '옷장에 넣었어요' : '찜에 추가했어요');
-}
-
-/* ═════════════ 화면: 코디 · 옷장 ═════════════ */
-const SLOTS = [['outer', '아우터'], ['top', '상의'], ['bottom', '하의'], ['shoes', '신발'], ['head', '모자'], ['bag', '가방']];
-let looksTab = 'looks', lookDraft = null;
-function poolFor(cat) {
-  const ids = [...new Set([...Object.keys(S.closet), ...Object.keys(S.wish)])];
-  return ids.map(getItem).filter((x) => x && x.c === cat && x.i);
-}
-function lookCost(lk) { return Object.values(lk.slots).filter(Boolean).map(getItem).filter((x) => x && !S.closet[x.id] && !x.gone).reduce((s, x) => s + (x.k || 0), 0); }
-function viewLooks() {
-  const v = $('#view');
-  const own = Object.keys(S.closet).map(getItem).filter(Boolean).sort((a, b) => S.closet[b.id].at - S.closet[a.id].at);
-  const seg = `<div class="segc" style="margin:16px 0 4px"><button data-act="ltab" data-v="looks" aria-pressed="${looksTab === 'looks'}">코디 ${S.looks.length}</button><button data-act="ltab" data-v="closet" aria-pressed="${looksTab === 'closet'}">옷장 ${own.length}</button></div>`;
-  if (looksTab === 'closet') {
-    v.innerHTML = `${seg}<h1 class="lead">${own.length ? `갖고 있는 옷 ${own.length}벌` : '옷장이 비어 있어요'}</h1>
-      <button class="btn ink wide" data-act="add-closet">${IC.plus}갖고 있는 옷 추가</button>
-      ${own.length ? `<div class="grid" style="margin-top:18px">${own.map(cardHTML).join('')}</div>` : `<div class="empty" style="margin-top:14px"><h3>사진 한 장이면 돼요</h3><p>직접 찍은 사진이나 샀던 쇼핑몰 주소로 추가할 수 있어요. 여기 있는 옷과 찜한 옷을 섞어 코디를 만들어요.</p></div>`}`;
-    return;
-  }
-  const can = SLOTS.slice(0, 4).filter(([c]) => poolFor(c).length).length;
-  v.innerHTML = `${seg}<h1 class="lead">${S.looks.length ? `저장한 코디 ${S.looks.length}개` : '찜한 옷과 갖고 있는 옷으로 코디를 짜요'}</h1>
-    <div class="row"><button class="btn ink grow" data-act="look-new">${IC.plus}코디 만들기</button><button class="btn grow" data-act="look-auto"${can < 2 ? ' disabled' : ''}>자동으로 짜 보기</button></div>
-    ${can < 2 ? '<p class="note" style="margin-top:8px">상의, 하의처럼 종류가 다른 옷을 2벌 이상 찜하거나 옷장에 넣으면 자동 코디를 쓸 수 있어요.</p>' : ''}
-    <div style="margin-top:18px">${S.looks.map((lk) => {
-      const its = SLOTS.map(([c]) => lk.slots[c]).filter(Boolean).map(getItem).filter(Boolean);
-      const cost = lookCost(lk);
-      return `<div class="look"><h3><span>${esc(lk.name)}</span><span class="row"><button class="btn sm" data-act="look-edit" data-id="${lk.id}">고치기</button><button class="btn sm" data-act="look-del" data-id="${lk.id}" aria-label="코디 삭제">${IC.trash.replace('class="ic"', 'class="ic" style="width:17px;height:17px"')}</button></span></h3>
-        <div class="pcs">${its.map((x) => `<button class="p" data-act="open" data-id="${esc(x.id)}"><img src="${esc(sizedImg(x.i, 240))}" data-full="${esc(x.i)}" alt="${esc(x.t)}" loading="lazy" referrerpolicy="no-referrer">${S.closet[x.id] ? '<em>보유</em>' : ''}</button>`).join('')}</div>
-        <p class="note">${cost ? `아직 없는 옷을 다 사면 <b class="num" style="color:var(--ink)">${won(cost)}원</b>` : '모두 갖고 있는 옷이에요'}</p></div>`;
-    }).join('')}</div>`;
-}
-function openLook(lk) {
-  lookDraft = lk ? JSON.parse(JSON.stringify(lk)) : { id: 'l' + Date.now().toString(36), name: `코디 ${S.looks.length + 1}`, slots: {} };
-  const body = () => `
-    <div class="fs"><h3>이름</h3><label class="field"><input id="lk-name" value="${esc(lookDraft.name)}" maxlength="24"></label></div>
-    <div class="fs"><h3>옷 고르기 <span>칸을 누르면 바꿀 수 있어요</span></h3><div class="slots">${SLOTS.map(([c, n]) => {
-      const it = lookDraft.slots[c] ? getItem(lookDraft.slots[c]) : null;
-      return `<button class="slot${it ? ' has' : ''}" data-act="slot" data-v="${c}"><span class="lb">${n}</span>${it ? `<img src="${esc(sizedImg(it.i, 300))}" data-full="${esc(it.i)}" alt="${esc(it.t)}" referrerpolicy="no-referrer">` : `${IC.plus}<span>${poolFor(c).length ? '고르기' : '후보 없음'}</span>`}</button>`;
-    }).join('')}</div></div>
-    <p class="note">찜했거나 옷장에 있는 옷이 후보로 나와요. 아직 없는 옷 합계: <b class="num" style="color:var(--ink)">${won(lookCost(lookDraft))}원</b></p>`;
-  const w = openSheet('코디 만들기', body(), `<button class="btn" data-act="look-shuffle">다시 섞기</button><button class="btn pri" data-act="look-save">저장</button>`);
-  w._rerender = () => { const n = $('#lk-name', w); if (n) lookDraft.name = n.value.trim() || lookDraft.name; const b = $('.sh-body', w), y = b.scrollTop; b.innerHTML = body(); b.scrollTop = y; };
-}
-function autoFill(lk) {
-  const pools = Object.fromEntries(SLOTS.map(([c]) => [c, poolFor(c)]));
-  const core = ['top', 'bottom', 'shoes', 'outer'].filter((c) => pools[c].length);
-  if (!core.length) return lk;
-  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-  const anchorCat = pick(core), anchor = pick(pools[anchorCat]);
-  lk.slots = { [anchorCat]: anchor.id };
-  let accent = (anchor.col || []).find((c) => !NEUTRAL.has(c)) || '';
-  for (const [c] of SLOTS) {
-    if (c === anchorCat || !pools[c].length) continue;
-    if ((c === 'head' || c === 'bag') && Math.random() < 0.5) continue;
-    let best = null, bs = -1e9;
-    for (const x of pools[c]) {
-      const cols = x.col || [];
-      const loud = cols.find((k) => !NEUTRAL.has(k));
-      let s = Math.random() * 1.5;
-      if (S.closet[x.id]) s += 1.2;
-      if (!loud) s += 1.5; else if (!accent) s += 0.8; else if (loud === accent) s += 0.3; else s -= 2.5;
-      if (cols[0] && cols[0] === (anchor.col || [])[0] && cols[0] !== 'black') s -= 0.8;
-      if (s > bs) { bs = s; best = x; }
-    }
-    if (best) { lk.slots[c] = best.id; const loud = (best.col || []).find((k) => !NEUTRAL.has(k)); if (loud && !accent) accent = loud; }
-  }
-  return lk;
-}
-function openPicker(cat) {
-  const pool = poolFor(cat);
-  const name = CATNAME[cat];
-  const body = pool.length ? `<div class="pick">${pool.map((x) => `<button data-act="pick" data-v="${cat}" data-id="${esc(x.id)}" aria-label="${esc(x.t)}"><img src="${esc(sizedImg(x.i, 300))}" data-full="${esc(x.i)}" alt="" loading="lazy" referrerpolicy="no-referrer">${S.closet[x.id] ? '<span class="badges"><span class="bd own">보유</span></span>' : ''}</button>`).join('')}</div>`
-    : `<div class="empty"><h3>고를 수 있는 ${name}이(가) 없어요</h3><p>탐색에서 ${name}을(를) 찜하거나, 옷장에 갖고 있는 옷을 추가하면 여기에 나와요.</p></div>`;
-  openSheet(`${name} 고르기`, body, lookDraft.slots[cat] ? `<button class="btn" data-act="pick" data-v="${cat}" data-id="">이 칸 비우기</button>` : '');
 }
 
 /* ═════════════ 화면: MY ═════════════ */
@@ -1004,45 +1110,37 @@ function viewMy() {
   const when = META?.updated ? new Date(META.updated).toLocaleString('ko-KR', { month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
   const stName = { ok: '정상', stale: '이전 데이터 사용 중', robots: '수집 불허(건너뜀)', blocked: '접근 거부', unsupported: '지원 안 함', error: '오류', empty: '상품 없음' };
   v.innerHTML = `
-    <h1 class="lead">${P.name ? esc(P.name) + '님의 셀렉트샵' : '내 셀렉트샵'}</h1>
-    <div class="panel"><h3>취향과 사이즈</h3>
-      <p>${profileSummary() || '사이즈를 아직 안 골랐어요'}${P.styles.length ? '<br>' + P.styles.map((s) => STYLE[s]?.name).filter(Boolean).join(', ') : ''}${P.brands.length ? '<br>' + P.brands.slice(0, 8).map(esc).join(', ') + (P.brands.length > 8 ? ` 외 ${P.brands.length - 8}` : '') : ''}${P.budget ? `<br>한 벌 예산 ${won(P.budget)}원` : ''}</p>
+    <h1 class="lead">${P.name ? esc(P.name) + '님의 옷 모음' : '내 옷 모음'}</h1>
+    <div class="panel"><h3>내 사이즈</h3>
+      <p>${profileSummary() || '아직 안 골랐어요. 골라 두면 스토어 탭에서 내 사이즈 재고를 파란 칸으로 보여줘요.'}</p>
       <div class="row"><button class="btn pri sm" data-act="profile">고치기</button></div></div>
-    <div class="panel"><h3>검색할 때 함께 열 쇼핑몰</h3><p>탐색에서 검색하면 고른 쇼핑몰의 검색 결과로 바로 가는 버튼이 나와요.</p>
+    <div class="panel"><h3>검색할 때 열 쇼핑몰</h3><p>모음 탭 검색창 아래와 상품 화면에 고른 쇼핑몰 버튼이 나와요.</p>
       <div class="chips wrapx" style="margin-top:12px">${MALLS.map((m) => `<button class="chip" data-act="mall" data-v="${m[0]}" aria-pressed="${S.malls.includes(m[0])}">${m[1]}</button>`).join('')}</div></div>
-    <div class="panel"><h3>홈 화면에 앱으로 추가</h3><p>아이폰: Safari 아래 공유 버튼 → ‘홈 화면에 추가’<br>안드로이드: Chrome 오른쪽 위 메뉴 → ‘홈 화면에 추가’ 또는 ‘앱 설치’</p>
-      <div class="row hide" id="installRow"><button class="btn sm" data-act="install">지금 설치</button></div></div>
-    <div class="panel"><h3>내 데이터 백업</h3><p>찜, 옷장, 코디, 취향은 이 기기에만 저장돼요. 기기를 바꾸기 전에 파일로 내보내 두세요.</p>
-      <div class="row"><button class="btn sm" data-act="export">파일로 내보내기</button><label class="btn sm" style="cursor:pointer">파일에서 가져오기<input id="importFile" type="file" accept="application/json,.json" hidden></label><button class="btn sm" data-act="unhide"${Object.keys(S.hidden).length ? '' : ' disabled'}>숨긴 옷 ${Object.keys(S.hidden).length}개 되살리기</button></div></div>
-    <div class="panel"><h3>수집 현황</h3><p>${when ? `마지막 수집 ${esc(when)}. ` : ''}하루 두 번 자동으로 다시 모아요. 사진과 가격은 각 스토어가 공개한 정보예요.</p>
-      <table class="src"><tbody>${st.map((s) => `<tr><td><span class="dot ${s.state === 'ok' ? 'ok' : s.state === 'stale' ? 'stale' : 'bad'}"></span>${esc(s.name)}<span class="st">${esc(s.domain)}${s.state !== 'ok' ? ' · ' + (stName[s.state] || s.state) : ''}</span></td><td class="num">${s.count ? won(s.count) + '개' : '-'}</td></tr>`).join('') || '<tr><td>아직 수집 기록이 없어요</td><td></td></tr>'}</tbody></table>
+    <div class="panel"><h3>홈 화면에 앱으로 추가</h3><p>아이폰: Safari 아래 공유 버튼 → ‘홈 화면에 추가’<br>안드로이드: Chrome 오른쪽 위 메뉴 → ‘홈 화면에 추가’</p>
+      <p style="margin-top:6px">홈 화면 앱과 Safari는 저장 공간이 따로예요. 한쪽에서 담은 옷은 다른 쪽에 안 보이니 홈 화면 앱 하나로만 쓰세요.</p></div>
+    <div class="panel"><h3>내 데이터 백업</h3><p>담은 옷과 보드는 이 기기에만 저장돼요. 기기를 바꾸기 전에 파일로 내보내 두세요.</p>
+      <div class="row"><button class="btn sm" data-act="export">파일로 내보내기</button><label class="btn sm" style="cursor:pointer">파일에서 가져오기<input id="importFile" type="file" accept="application/json,.json" hidden></label></div></div>
+    <div class="panel"><h3>스토어 수집 현황</h3><p>${when ? `마지막 수집 ${esc(when)}. ` : ''}스토어 탭의 상품은 하루 두 번 자동으로 다시 모아요.</p>
+      <table class="src"><tbody>${st.map((s) => `<tr><td><span class="dot ${s.state === 'ok' ? 'ok' : s.state === 'stale' ? 'stale' : 'bad'}"></span>${esc(s.name)}<span class="st">${esc(s.domain)}${s.state !== 'ok' ? ' · ' + (stName[s.state] || s.state) : ''}</span></td><td class="num">${s.count ? won(s.count) + '개' : '-'}</td></tr>`).join('') || '<tr><td>불러오는 중이에요</td><td></td></tr>'}</tbody></table>
       <div class="row"><button class="chip" data-act="global" aria-pressed="${P.global}">해외 스토어 상품도 보기</button></div></div>`;
-  if (deferredInstall) $('#installRow').classList.remove('hide');
+  if (!META) loadMeta().then(() => { if (META && current() === 'my') route(true); });
 }
 let pfDraft = null;
 function openProfile() {
   pfDraft = JSON.parse(JSON.stringify(S.profile));
-  const bc = {};
-  for (const it of ITEMS) bc[it.b] = (bc[it.b] || 0) + 1;
-  const brands = [...new Set([...pfDraft.brands, ...Object.entries(bc).sort((a, b) => b[1] - a[1]).slice(0, 48).map((x) => x[0])])];
   const one = (k, v, label, sq) => `<button class="chip${sq ? ' sq' : ''}" data-act="pf-one" data-k="${k}" data-v="${esc(v)}" aria-pressed="${String(pfDraft[k]) === String(v)}">${esc(label ?? v)}</button>`;
-  const many = (k, v, label, sw) => `<button class="chip" data-act="pf-many" data-k="${k}" data-v="${esc(v)}" aria-pressed="${pfDraft[k].includes(v)}">${sw ? `<span class="sw" style="background:${sw}"></span>` : ''}${esc(label ?? v)}</button>`;
   const body = () => `
-    <div class="fs"><h3>이름</h3><label class="field"><input id="pf-name" value="${esc(pfDraft.name)}" maxlength="12" placeholder="추천 문구에 쓰여요"></label></div>
+    <div class="fs"><h3>이름</h3><label class="field"><input id="pf-name" value="${esc(pfDraft.name)}" maxlength="12"></label></div>
     <div class="fs"><h3>주로 보는 옷</h3><div class="chips wrapx">${one('fit', 'm', '남성')}${one('fit', 'w', '여성')}${one('fit', 'all', '가리지 않음')}</div></div>
     <div class="fs"><h3>상의·아우터 사이즈</h3><div class="chips wrapx">${TOP_SIZES.map((s) => one('top', s, s, 1)).join('')}</div></div>
     <div class="fs"><h3>하의 사이즈 <span>둘 다 골라도 돼요</span></h3><div class="chips wrapx">${TOP_SIZES.map((s) => one('bottomA', s, s, 1)).join('')}</div><div class="chips wrapx" style="margin-top:8px">${WAISTS.map((s) => one('waist', s, s, 1)).join('')}</div></div>
-    <div class="fs"><h3>신발 사이즈 <span>mm</span></h3><div class="chips wrapx">${SHOES.map((s) => one('shoe', s, s, 1)).join('')}</div></div>
-    <div class="fs"><h3>좋아하는 스타일</h3><div class="chips wrapx">${STYLES.map((s) => many('styles', s.id, s.name)).join('')}</div></div>
-    <div class="fs"><h3>좋아하는 브랜드 <span>지금 모인 스토어 기준</span></h3><div class="chips wrapx">${brands.length ? brands.map((b) => many('brands', b, b)).join('') : '<span class="note">상품이 모이면 여기에 브랜드가 나와요</span>'}</div></div>
-    <div class="fs"><h3>자주 입는 색</h3><div class="chips wrapx">${Object.entries(COLORS).map(([id, [n, c]]) => many('colors', id, n, c)).join('')}</div></div>
-    <div class="fs"><h3>한 벌 예산</h3><div class="chips wrapx">${BUDGETS.map(([n, l]) => one('budget', n, l)).join('')}</div></div>`;
-  const w = openSheet('취향과 사이즈', body(), `<button class="btn pri" data-act="pf-save">저장</button>`);
+    <div class="fs"><h3>신발 사이즈 <span>mm</span></h3><div class="chips wrapx">${SHOES.map((s) => one('shoe', s, s, 1)).join('')}</div></div>`;
+  const w = openSheet('내 사이즈', body(), `<button class="btn pri" data-act="pf-save">저장</button>`);
   w._rerender = () => { const n = $('#pf-name', w); if (n) pfDraft.name = n.value.trim(); const b = $('.sh-body', w), y = b.scrollTop; b.innerHTML = body(); b.scrollTop = y; };
 }
 
 /* ═════════════ 라우팅 · 이벤트 ═════════════ */
-const VIEWS = { home: viewHome, explore: viewExplore, wish: viewWish, looks: viewLooks, my: viewMy };
+const VIEWS = { home: viewHome, boards: viewBoards, store: viewStore, my: viewMy };
 function current() { const h = location.hash.replace('#', ''); return VIEWS[h] ? h : 'home'; }
 function route(keepScroll) {
   const tab = current();
@@ -1051,12 +1149,11 @@ function route(keepScroll) {
   VIEWS[tab]();
   window.scrollTo(0, keepScroll ? y : 0);
   const when = META?.updated ? new Date(META.updated) : null;
-  $('#stamp').textContent = when ? `${when.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 기준` : '';
+  $('#stamp').textContent = tab === 'store' && when ? `${when.toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })} 기준` : '';
 }
 window.addEventListener('hashchange', () => { if (!topSheet()) route(); });
-
-let deferredInstall = null;
-window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstall = e; $('#installRow')?.classList.remove('hide'); });
+let rsT = 0, lastCols = 0;
+window.addEventListener('resize', () => { clearTimeout(rsT); rsT = setTimeout(() => { const c = window.innerWidth >= 1100 ? 5 : window.innerWidth >= 860 ? 4 : window.innerWidth >= 600 ? 3 : 2; if (c !== lastCols) { lastCols = c; if (current() === 'home' && !topSheet()) route(true); } }, 200); });
 
 document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-act]');
@@ -1064,45 +1161,66 @@ document.addEventListener('click', (e) => {
   const { act, id, v, k } = el.dataset;
   const sheet = topSheet();
   const tgl = (arr, x) => { const i = arr.indexOf(x); if (i >= 0) arr.splice(i, 1); else arr.push(x); };
+  const piece = () => ED && ED.b.pieces.find((x) => x.pid === ED.sel);
   switch (act) {
     case 'close': closeSheet(); break;
     case 'open': openProduct(id); break;
-    case 'wish': toggleWish(id); if (current() === 'wish' && !sheet) route(true); break;
-    case 'own': toggleOwn(id); if (sheet) { closeSheet(); } route(true); break;
-    case 'hide': { const it = getItem(id); S.hidden[id] = 1; learn(it, 'hide'); save(); closeSheet(); route(true); toast('앞으로 이 옷은 안 보여요'); break; }
-    case 'del-custom': delete S.custom[id]; delete S.wish[id]; delete S.closet[id]; for (const lk of S.looks) for (const c in lk.slots) if (lk.slots[c] === id) delete lk.slots[c]; save(); closeSheet(); syncWishUI(id); route(true); break;
-    case 'reload': location.reload(); break;
+    case 'save': toggleSave(id); if (current() === 'home' && !sheet) route(true); break;
+    case 'del-item': removeItem(id); closeSheet(); route(true); toast('삭제했어요'); break;
+    case 'add-link': openAdd(); break;
+    case 'a-paste': addPaste(); break;
+    case 'a-fetch': addFetch(); break;
+    case 'a-cat': sheet._sync(); draft.c = v; sheet._rerender(); break;
+    case 'a-save': addSave(); break;
+    case 'hsrc': homeSrc = v; route(true); break;
+    case 'refresh': refreshPrices(); break;
+    case 'refresh-one': closeSheet(); refreshPrices([id]); break;
+    case 'to-board': {
+      closeSheet();
+      if (!S.boards.length) { setTimeout(() => newBoard([id]), 60); break; }
+      setTimeout(() => {
+        const w = openSheet('어느 보드에 넣을까요?', `<div class="chips wrapx">${S.boards.map((b) => `<button class="chip" data-act="to-board-pick" data-id="${esc(id)}" data-v="${b.id}">${esc(b.name)}</button>`).join('')}<button class="chip" data-act="to-board-pick" data-id="${esc(id)}" data-v="">${IC.plus}새 보드</button></div>`);
+        w._x = 1;
+      }, 60);
+      break;
+    }
+    case 'to-board-pick': {
+      closeSheet();
+      setTimeout(() => {
+        if (!v) { newBoard([id]); return; }
+        const b = S.boards.find((x) => x.id === v);
+        b.pieces.push({ pid: uid('p'), item: id, x: 50, y: 50, w: 42, r: 0, cut: false }); save(); openEditor(b.id);
+      }, 60);
+      break;
+    }
+    case 'board-new': openPicker((ids) => { if (ids.length) newBoard(ids); }); break;
+    case 'board-open': openEditor(id); break;
+    case 'pk': sheet._pick(id, el); break;
+    case 'pk-done': sheet._done(); break;
+    case 'b-add': openPicker((ids) => { if (!ED) return; for (const i of ids) ED.b.pieces.push({ pid: uid('p'), item: i, x: 50, y: 50, w: 40, r: 0, cut: false }); save(); ED.draw(); }); break;
+    case 'b-arrange': { const ars = {}; for (const im of $$('.pc img', ED.stage)) { const p = ED.b.pieces.find((x) => x.pid === im.parentElement.dataset.pid); if (p && im.naturalWidth) ars[p.item] = im.naturalWidth / im.naturalHeight; } arrange(ED.b, ars); save(); ED.draw(); for (const p of ED.b.pieces.filter((x) => x.cut)) applyCut(p, true); break; }
+    case 'b-cutall': { toast('배경을 지우는 중이에요'); for (const p of ED.b.pieces) { p.cut = true; applyCut(p, true); } save(); ED.select(ED.sel); break; }
+    case 'b-bg': ED.b.bg = v; ED.stage.style.background = v; for (const s of $$('[data-act="b-bg"]', sheet)) s.setAttribute('aria-pressed', s.dataset.v === v); save(); break;
+    case 'b-del': { const bid = ED.b.id; S.boards = S.boards.filter((x) => x.id !== bid); sheet._onclose = null; ED = null; save(); closeSheet(); route(true); toast('보드를 삭제했어요'); break; }
+    case 'b-export': exportBoard(); break;
+    case 'b-share': sheet._share(); break;
+    case 'p-size': { const p = piece(); if (p) { p.w = +clamp(p.w * +v, 6, 180).toFixed(2); ED.apply(p); save(); } break; }
+    case 'p-rot': { const p = piece(); if (p) { p.r = +(p.r + +v).toFixed(1); ED.apply(p); save(); } break; }
+    case 'p-z': { const p = piece(); if (p) { const a = ED.b.pieces; a.splice(a.indexOf(p), 1); if (+v > 0) a.push(p); else a.unshift(p); save(); ED.draw(); for (const q of a.filter((x) => x.cut)) applyCut(q, true); } break; }
+    case 'p-cut': { const p = piece(); if (p) { p.cut = !p.cut; save(); if (p.cut) { toast('배경을 지우는 중이에요'); applyCut(p); } else { const it = getItem(p.item), im = ED.stage.querySelector(`[data-pid="${p.pid}"] img`); if (im && it) im.src = sizedImg(it.i, 700); } ED.select(ED.sel); } break; }
+    case 'p-del': { const p = piece(); if (p) { ED.b.pieces = ED.b.pieces.filter((x) => x !== p); ED.sel = null; save(); ED.draw(); for (const q of ED.b.pieces.filter((x) => x.cut)) applyCut(q, true); } break; }
     case 'profile': openProfile(); break;
-    case 'pf-one': pfDraft[k] = k === 'budget' ? +v : (String(pfDraft[k]) === v && k !== 'fit' ? '' : v); sheet._rerender(); break;
-    case 'pf-many': tgl(pfDraft[k], v); sheet._rerender(); break;
-    case 'pf-save': { const n = $('#pf-name', sheet); if (n) pfDraft.name = n.value.trim(); S.profile = { ...pfDraft, onboarded: true }; save(); closeSheet(); route(); toast('저장했어요. 추천을 새로 골랐어요'); break; }
+    case 'pf-one': pfDraft[k] = String(pfDraft[k]) === v && k !== 'fit' ? '' : v; sheet._rerender(); break;
+    case 'pf-save': { const n = $('#pf-name', sheet); if (n) pfDraft.name = n.value.trim(); S.profile = { ...pfDraft }; save(); closeSheet(); route(); toast('저장했어요'); break; }
     case 'cat': F.cat = v; F.sub = ''; for (const c of $$('#cats .chip')) c.setAttribute('aria-pressed', c.dataset.v === v); renderResults(); window.scrollTo(0, 0); break;
-    case 'filters': openFilters(); break;
+    case 'filters': if (LOADED && !LOAD_ERR) openFilters(); break;
     case 'filters-reset': { const keep = { q: F.q, cat: F.cat, sort: F.sort }; F = { ...F0(), ...keep }; if (sheet) sheet._rerender(); else renderResults(); break; }
     case 'f-tog': F[k] = !F[k]; sheet._rerender(); break;
     case 'f-sub': F.sub = F.sub === v ? '' : v; sheet._rerender(); break;
     case 'f-max': F.max = +v; sheet._rerender(); break;
     case 'f-arr': tgl(F[k], v); sheet._rerender(); break;
-    case 'go-new': F = { ...F0(), fresh: true, mysize: !!(S.profile.top || S.profile.waist || S.profile.shoe) && false }; location.hash = '#explore'; break;
-    case 'go-drop': F = { ...F0(), drop: true }; location.hash = '#explore'; break;
-    case 'add-link': openAdd('wish'); break;
-    case 'add-closet': openAdd('closet'); break;
-    case 'a-fetch': addFetch(); break;
-    case 'a-cat': sheet._sync(); draft.c = v; sheet._rerender(); break;
-    case 'a-save': addSave(); break;
-    case 'ltab': looksTab = v; route(); break;
-    case 'look-new': openLook(null); break;
-    case 'look-auto': openLook(null); autoFill(lookDraft); topSheet()._rerender(); break;
-    case 'look-edit': openLook(S.looks.find((x) => x.id === id)); break;
-    case 'look-del': S.looks = S.looks.filter((x) => x.id !== id); save(); route(true); break;
-    case 'look-shuffle': sheet._rerender(); autoFill(lookDraft); sheet._rerender(); break;
-    case 'look-save': { const n = $('#lk-name', sheet); if (n && n.value.trim()) lookDraft.name = n.value.trim(); if (!Object.values(lookDraft.slots).filter(Boolean).length) { toast('옷을 한 벌 이상 골라 주세요'); break; } const i = S.looks.findIndex((x) => x.id === lookDraft.id); if (i >= 0) S.looks[i] = lookDraft; else S.looks.unshift(lookDraft); save(); closeSheet(); route(); toast('코디를 저장했어요'); break; }
-    case 'slot': sheet._rerender(); openPicker(v); break;
-    case 'pick': if (id) lookDraft.slots[v] = id; else delete lookDraft.slots[v]; closeSheet(); setTimeout(() => topSheet()?._rerender?.(), 0); break;
     case 'mall': tgl(S.malls, v); save(); el.setAttribute('aria-pressed', S.malls.includes(v)); break;
     case 'global': S.profile.global = !S.profile.global; save(); el.setAttribute('aria-pressed', S.profile.global); break;
-    case 'unhide': S.hidden = {}; save(); route(true); toast('숨긴 옷을 모두 되살렸어요'); break;
-    case 'install': if (deferredInstall) { deferredInstall.prompt(); deferredInstall = null; } break;
     case 'export': {
       const blob = new Blob([JSON.stringify(S)], { type: 'application/json' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `moafit-backup-${TODAY}.json`; document.body.appendChild(a); a.click(); a.remove();
@@ -1113,32 +1231,37 @@ document.addEventListener('click', (e) => {
 let qT = 0;
 document.addEventListener('input', (e) => {
   if (e.target.id === 'q') { clearTimeout(qT); qT = setTimeout(() => { F.q = e.target.value; renderResults(); }, 180); }
+  if (e.target.id === 'hq') { homeQ = e.target.value; $('#hmalls').innerHTML = mallLinks(homeQ); }
+});
+document.addEventListener('paste', (e) => {
+  if (e.target.id !== 'a-url') return;
+  const u = firstURL((e.clipboardData || window.clipboardData)?.getData('text') || '');
+  if (u) { e.preventDefault(); e.target.value = u; draft.url = u; addFetch(); }
 });
 document.addEventListener('change', async (e) => {
   const t = e.target;
   if (t.id === 'sort') { F.sort = t.value; renderResults(); }
-  if (t.id === 'wsort') { wishSort = t.value; route(true); }
-  if (t.id === 'a-file' && t.files[0]) { const w = topSheet(); w._sync(); try { draft.i = await fileToDataURL(t.files[0]); draft.msg = ''; } catch { draft.msg = '이 사진은 열 수 없어요. 다른 사진을 골라 주세요.'; } w._rerender(); }
+  if (t.id === 'a-file' && t.files[0]) { const w = topSheet(); w._sync(); try { draft.i = await fileToDataURL(t.files[0]); draft.msg = ''; if (!draft.mall) draft.mall = '내 사진'; } catch { draft.msg = '이 사진은 열 수 없어요. 다른 사진을 골라 주세요.'; } w._rerender(); }
   if (t.id === 'importFile' && t.files[0]) {
     try {
       const j = JSON.parse(await t.files[0].text());
       if (!j || typeof j !== 'object' || !j.profile) throw new Error('shape');
-      const b = BLANK();
-      S = { ...b, ...j, profile: { ...b.profile, ...j.profile }, w: { ...b.w, ...(j.w || {}) } };
-      save(); syncWishUI(''); route(); toast('백업에서 가져왔어요');
+      adopt(j); save(); syncSaveUI(''); route(); toast('백업에서 가져왔어요');
     } catch { toast('MOAFIT 백업 파일이 아니에요'); }
   }
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.id === 'q') e.target.blur(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
+  if (e.target.id === 'q') e.target.blur();
+  if (e.target.id === 'hq') { e.preventDefault(); const a = $('#hmalls .mallgo'); if (a && homeQ.trim()) a.click(); else e.target.blur(); }
+  if (e.target.id === 'a-url') { e.preventDefault(); addFetch(); }
+});
 
 /* ═════════════ 시작 ═════════════ */
 loadState();
-syncWishUI('');
+syncSaveUI('');
+lastCols = window.innerWidth >= 1100 ? 5 : window.innerWidth >= 860 ? 4 : window.innerWidth >= 600 ? 3 : 2;
 route();
-loadCatalog().then(() => {
-  route(true);
-  if (!S.profile.onboarded && !LOAD_ERR && !sessionStorage.getItem('moafit:asked')) { try { sessionStorage.setItem('moafit:asked', '1'); } catch { /* 무시 */ } openProfile(); }
-});
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 </script>
 </body>
