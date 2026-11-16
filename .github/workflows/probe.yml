@@ -1,0 +1,19 @@
+name: probe
+
+# config/candidates.txt 를 고쳐서 올리면, 그 스토어들이 수집 가능한지 확인해 줍니다.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['config/candidates.txt', 'scripts/probe.mjs']
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - run: node scripts/probe.mjs

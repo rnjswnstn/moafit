@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore: ['config/candidates.txt', 'scripts/probe.mjs', '.github/workflows/probe.yml', 'README.md']
 
 permissions:
   contents: write

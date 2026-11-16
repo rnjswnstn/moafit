@@ -26,7 +26,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
-body{background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--f);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;padding-bottom:calc(var(--tab) + var(--sab) + 24px)}
+body{background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--f);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;word-break:keep-all;overflow-wrap:anywhere;padding-bottom:calc(var(--tab) + var(--sab) + 24px)}
 body.lock{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
 button{background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:inherit}
@@ -56,7 +56,7 @@ img{display:block;max-width:100%}
 svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
 
 /* 제목류 */
-.lead{font-weight:700;font-size:25px;line-height:1.28;letter-spacing:-.025em;padding:22px 0 14px;max-width:18em}
+.lead{font-weight:700;font-size:25px;line-height:1.28;letter-spacing:-.025em;padding:22px 0 14px;max-width:24em;text-wrap:balance}
 .sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:26px 0 12px}
 .sec h2{font-size:17px;font-weight:700;letter-spacing:-.02em}
 .sec .more{font-size:13px;color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
@@ -77,7 +77,7 @@ svg.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;str
 @media(min-width:620px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:26px 14px}}
 @media(min-width:900px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(min-width:1160px){.grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
-.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;margin:0 -14px;padding:0 14px 4px;scrollbar-width:none}
+.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding-left:14px;margin:0 -14px;padding:0 14px 4px;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
 .rail .card{flex:0 0 150px;scroll-snap-align:start}
 
@@ -772,7 +772,6 @@ function openProduct(id) {
     ${h ? `<div class="kv"><div><dt>가격 변화</dt><dd class="num">${h.map((x) => won(x[1] * (it.st?.rate || 1))).join(' → ')}원</dd></div></div><div class="hist" aria-hidden="true">${h.map((x) => `<i style="height:${Math.max(8, Math.round((x[1] / hmax) * 100))}%"></i>`).join('')}</div>` : ''}
     <dl class="kv">
       ${it.st ? `<div><dt>파는 곳</dt><dd>${esc(it.st.name)}${it.kr ? '' : ' (해외)'}</dd></div>` : it.mall ? `<div><dt>파는 곳</dt><dd>${esc(it.mall)}</dd></div>` : ''}
-      <div><dt>분류</dt><dd>${esc(CATNAME[it.c] || '기타')}${SUBS[it.sc] && SUBS[it.sc] !== CATNAME[it.c] ? ' · ' + esc(SUBS[it.sc]) : ''}</dd></div>
       ${it.d && !it.custom ? `<div><dt>등록일</dt><dd class="num">${esc(it.d)}</dd></div>` : ''}
     </dl>
     ${mallsHTML(searchQueryFor(it), '같은 옷을 다른 쇼핑몰에서 찾아보기').replace('class="malls"', 'class="malls" style="margin-top:18px"')}
@@ -782,7 +781,7 @@ function openProduct(id) {
     </div>`;
   const foot = `<button class="btn fix" data-act="wish" data-id="${esc(it.id)}" aria-pressed="${!!S.wish[it.id]}" aria-label="찜"><span class="pin" style="position:static;background:none">${IC.heart}</span></button>
     ${it.url ? `<a class="btn pri" href="${esc(it.url)}" target="_blank" rel="noopener">${it.gone ? '원래 페이지 열기' : (it.st ? esc(it.st.name) : esc(it.mall || '판매 페이지')) + '에서 보기'}</a>` : '<span class="btn" style="border-color:transparent">링크 없이 추가한 옷</span>'}`;
-  openSheet(it.b, body, foot);
+  openSheet(SUBS[it.sc] || CATNAME[it.c] || '상품', body, foot);
 }
 
 /* ═════════════ 찜 · 옷장 ═════════════ */
