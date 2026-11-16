@@ -1,0 +1,27 @@
+{
+  "maxProductsPerStore": 1000,
+  "delayMs": 1200,
+  "stores": [
+    { "id": "stussy-kr", "name": "Stüssy Korea", "domain": "www.stussy.co.kr", "currency": "KRW", "region": "KR" },
+    { "id": "worksout", "name": "WORKSOUT", "domain": "worksout.co.kr", "currency": "KRW", "region": "KR" },
+    { "id": "carhartt-wip-kr", "name": "Carhartt WIP Korea", "domain": "www.carhartt-wip.co.kr", "currency": "KRW", "region": "KR" },
+    { "id": "obey-kr", "name": "OBEY Korea", "domain": "obeyclothing.co.kr", "currency": "KRW", "region": "KR" },
+    { "id": "slowsteadyclub", "name": "SLOW STEADY CLUB", "domain": "slowsteadyclub.com", "currency": "KRW", "region": "KR" },
+    { "id": "etcseoul", "name": "ETC SEOUL", "domain": "etcseoul.com", "currency": "KRW", "region": "KR" },
+    { "id": "8division", "name": "8DIVISION", "domain": "8division.com", "currency": "KRW", "region": "KR" },
+    { "id": "heights", "name": "HEIGHTS.", "domain": "heights-store.com", "currency": "KRW", "region": "KR" },
+    { "id": "iamshop", "name": "I AM SHOP", "domain": "iamshop-online.com", "currency": "KRW", "region": "KR" },
+    { "id": "sculp", "name": "SCULP STORE", "domain": "sculpstore.com", "currency": "KRW", "region": "KR" },
+    { "id": "obscura", "name": "OBSCURA", "domain": "obscura-store.com", "currency": "KRW", "region": "KR" },
+    { "id": "tune", "name": "TUNE", "domain": "tune.kr", "currency": "KRW", "region": "KR" },
+    { "id": "addicted", "name": "ADDICTED", "domain": "addicted.kr", "currency": "KRW", "region": "KR" },
+    { "id": "kasina", "name": "KASINA", "domain": "www.kasina.co.kr", "currency": "KRW", "region": "KR" },
+    { "id": "kith", "name": "Kith", "domain": "kith.com", "currency": "USD", "region": "GLOBAL", "max": 600 },
+    { "id": "humanmade", "name": "HUMAN MADE", "domain": "humanmade.jp", "currency": "JPY", "region": "GLOBAL", "max": 600 },
+    { "id": "ald", "name": "Aimé Leon Dore", "domain": "www.aimeleondore.com", "currency": "USD", "region": "GLOBAL", "max": 600 },
+    { "id": "dime", "name": "Dime", "domain": "dimemtl.com", "currency": "CAD", "region": "GLOBAL", "max": 600 },
+    { "id": "braindead", "name": "Brain Dead", "domain": "wearebraindead.com", "currency": "USD", "region": "GLOBAL", "max": 600 },
+    { "id": "gramicci", "name": "Gramicci", "domain": "www.gramicci.com", "currency": "USD", "region": "GLOBAL", "max": 600 },
+    { "id": "patta", "name": "Patta", "domain": "www.patta.nl", "currency": "EUR", "region": "GLOBAL", "max": 600 }
+  ]
+}
