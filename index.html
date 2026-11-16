@@ -818,7 +818,7 @@ async function cutout(url) {
     if (xx > 0) push(p - 1); if (xx < W - 1) push(p + 1); if (yy > 0) push(p - W); if (yy < H - 1) push(p + W);
   }
   const ratio = removed / (W * H);
-  if (ratio < 0.04 || ratio > 0.93) throw new Error('cut');
+  if (ratio < 0.25 || ratio > 0.93) throw new Error('cut'); // 옷이 화면을 꽉 채운 사진(모델컷 등)은 지우지 않는다
   // 경계 부드럽게: 지워진 칸과 맞닿은, 배경색에 가까운 칸은 반투명으로
   for (let p = 0; p < W * H; p++) {
     if (seen[p]) continue;
@@ -1199,7 +1199,7 @@ document.addEventListener('click', (e) => {
     case 'pk-done': sheet._done(); break;
     case 'b-add': openPicker((ids) => { if (!ED) return; for (const i of ids) ED.b.pieces.push({ pid: uid('p'), item: i, x: 50, y: 50, w: 40, r: 0, cut: false }); save(); ED.draw(); }); break;
     case 'b-arrange': { const ars = {}; for (const im of $$('.pc img', ED.stage)) { const p = ED.b.pieces.find((x) => x.pid === im.parentElement.dataset.pid); if (p && im.naturalWidth) ars[p.item] = im.naturalWidth / im.naturalHeight; } arrange(ED.b, ars); save(); ED.draw(); for (const p of ED.b.pieces.filter((x) => x.cut)) applyCut(p, true); break; }
-    case 'b-cutall': { toast('배경을 지우는 중이에요'); for (const p of ED.b.pieces) { p.cut = true; applyCut(p, true); } save(); ED.select(ED.sel); break; }
+    case 'b-cutall': { toast('배경을 지우는 중이에요. 모델이 입은 사진은 그대로 둬요', 3500); for (const p of ED.b.pieces) { p.cut = true; applyCut(p, true); } save(); ED.select(ED.sel); break; }
     case 'b-bg': ED.b.bg = v; ED.stage.style.background = v; for (const s of $$('[data-act="b-bg"]', sheet)) s.setAttribute('aria-pressed', s.dataset.v === v); save(); break;
     case 'b-del': { const bid = ED.b.id; S.boards = S.boards.filter((x) => x.id !== bid); sheet._onclose = null; ED = null; save(); closeSheet(); route(true); toast('보드를 삭제했어요'); break; }
     case 'b-export': exportBoard(); break;
