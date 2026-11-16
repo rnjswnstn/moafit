@@ -88,6 +88,7 @@ export function robotsAllows(txt, target, uaToken = 'moafit') {
 }
 
 // ───────────────────────── 분류 규칙
+const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 const has = (s, re) => re.test(s);
 const CAT_RULES = [
   ['shoes', /\b(sneakers?|shoes?|boots?|loafers?|sandals?|slides?|slippers?|derby|derbies|trainers?|runners?|mules?|clogs?|footwear|oxfords?)\b|스니커|신발|부츠|로퍼|샌들|슬리퍼|운동화|구두|슬라이드/],
@@ -109,6 +110,9 @@ const SUB_RULES = {
 };
 const DEFAULT_SUB = { shoes: 'shoes', bag: 'bag', head: 'hat', acc: 'acc', bottom: 'pants', outer: 'jacket', top: 'top', etc: 'etc' };
 
+// 유형·제목에 '신발'이라는 말이 없어도 모델명으로 알아보는 보조 규칙
+const SHOE_MODELS = /\b(air (jordan|force|max)|jordan \d+|dunk|blazer|cortez|vomero|pegasus|p-?6000|shox|foamposite|kobe|air huarache|samba|gazelle|campus|superstar|stan smith|handball spezial|sl ?72|ozweego|adizero|ultraboost|99[0-3]v?\d?|2002r|1906[a-z]?|9060|530|550|574|327|gel-[a-z0-9]+|kayano|nimbus|gt-2160|mexico 66|xt-[46]|speedcross|acs pro|old skool|sk8-hi|slip-on|chuck (taylor|70)|one star|wallabee|club c|instapump|clifton|bondi|cloud ?(monster|nova|tilt)|arizona|boston)\b/i;
+
 export function classify(title, type, tags) {
   // 상품 유형 → 제목 → 태그 순으로 믿는다
   for (const src of [type, title, tags]) {
@@ -122,7 +126,18 @@ export function classify(title, type, tags) {
       }
     }
   }
+  if (SHOE_MODELS.test(title)) return ['shoes', 'sneakers'];
   return ['etc', 'etc'];
+}
+
+// 스토어마다 다르게 적는 브랜드 표기를 하나로 맞춘다
+const BRAND_CANON = { stussy: 'Stüssy', 'stüssy': 'Stüssy', nike: 'Nike', 'nike sb': 'Nike SB', jordan: 'Jordan', 'air jordan': 'Jordan', adidas: 'adidas', 'adidas originals': 'adidas', asics: 'ASICS', 'new balance': 'New Balance', 'by parra': 'by Parra', parra: 'by Parra', salomon: 'Salomon', converse: 'Converse', vans: 'Vans', puma: 'PUMA', reebok: 'Reebok', clarks: 'Clarks', 'clarks originals': 'Clarks Originals', 'carhartt wip': 'Carhartt WIP', 'the north face': 'The North Face', patagonia: 'Patagonia', "arc'teryx": "Arc'teryx", arcteryx: "Arc'teryx", oakley: 'Oakley', crocs: 'Crocs', birkenstock: 'Birkenstock', 'dr. martens': 'Dr. Martens', 'dr martens': 'Dr. Martens', hoka: 'HOKA', 'hoka one one': 'HOKA', on: 'On', 'on running': 'On', timberland: 'Timberland', ugg: 'UGG', 'new era': 'New Era', dickies: 'Dickies', champion: 'Champion', levis: "Levi's", "levi's": "Levi's", mizuno: 'Mizuno', saucony: 'Saucony', kith: 'Kith', patta: 'Patta', gramicci: 'Gramicci' };
+const VENDOR_IS_CATEGORY = /^(sale|mens?|womens?|unisex|kids|accessories|hats?|bags?|tops?|tees?|pants?|shorts?|outerwear|footwear|apparel|default|new|archive)(\s|$)|\b(pants|tees|tops|outerwear|shorts|hats|bags|accessories)$/i;
+export function brandOf(vendor, store) {
+  if (store.brand) return store.brand;
+  const v = clean(vendor);
+  if (!v || VENDOR_IS_CATEGORY.test(v)) return store.name;
+  return BRAND_CANON[v.toLowerCase()] || v;
 }
 
 export function gender(title, type, tags) {
@@ -162,7 +177,6 @@ export function colors(text) {
 
 // ───────────────────────── 상품 정리
 const num = (v) => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
-const clean = (s) => String(s || '').replace(/\s+/g, ' ').trim();
 const SKIP_TYPE = /placeholder|gift ?card|e-?gift|insurance|shipping|protection|route|donation|membership|ticket|raffle|sample|test|bundle fee|warranty/i;
 const SIZE_OPT = /size|사이즈|taille|サイズ|尺码|talla|größe/i;
 const COLOR_OPT = /colou?r|색상|컬러|カラー/i;
@@ -199,7 +213,8 @@ function colorOf(p, title) {
 export function normalize(p, store, rate, prev) {
   const title = clean(p.title);
   const type = clean(p.product_type);
-  if (!title || SKIP_TYPE.test(type) || /gift ?card|e-?gift|기프트 ?카드|상품권/i.test(title)) return null;
+  if (!title || SKIP_TYPE.test(type) || /gift ?card|e-?gift|기프트 ?카드|상품권|\btest\b|테스트/i.test(title)) return null;
+  if (store.vendorAllow && !new RegExp(store.vendorAllow, 'i').test(p.vendor || '')) return null;
   const variants = (p.variants || []).filter((v) => num(v.price) > 0);
   if (!variants.length) return null;
   const live = variants.filter((v) => v.available !== false);
@@ -215,7 +230,7 @@ export function normalize(p, store, rate, prev) {
   const item = {
     id,
     t: title,
-    b: clean(p.vendor) || store.name,
+    b: brandOf(p.vendor, store),
     c, sc,
     g: gender(title, type, tags),
     p: price,

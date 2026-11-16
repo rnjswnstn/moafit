@@ -7,7 +7,18 @@ import { robotsAllows } from './fetch.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UA = 'Mozilla/5.0 (compatible; moafit-personal-catalog/1.0)';
-const get = (url) => fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json,text/plain,*/*' }, redirect: 'follow', signal: AbortSignal.timeout(15000) });
+const get = (url, cookie) => fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json,text/html,text/plain,*/*', ...(cookie ? { Cookie: cookie } : {}) }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+// 스토어가 지금 어떤 나라·통화 기준으로 가격을 보여주는지 첫 화면에서 읽는다
+async function context(base, cookie) {
+  try {
+    const r = await get(`${base}/`, cookie);
+    const html = await r.text();
+    const cur = html.match(/Shopify\.currency\s*=\s*\{\s*"active"\s*:\s*"([A-Z]{3})"/)?.[1] || '?';
+    const country = html.match(/Shopify\.country\s*=\s*"([A-Z]{2})"/)?.[1] || '?';
+    const pj = await (await get(`${base}/products.json?limit=1`, cookie)).json();
+    return `${country}/${cur}/${pj.products?.[0]?.variants?.[0]?.price}`;
+  } catch (e) { return `실패(${e.cause?.code || e.name})`; }
+}
 
 async function probe(domain) {
   const base = `https://${domain}`;
@@ -23,7 +34,9 @@ async function probe(domain) {
     let meta = {};
     try { const m = await get(`${base}/meta.json`); if (m.ok) meta = await m.json(); } catch { /* 없음 */ }
     const p = j.products[0];
-    return `OK   ${domain}  ${meta.currency || '?'}  ${meta.published_products_count ?? '?'}개  ${meta.country || '?'}  "${meta.name || ''}"  예: ${p.vendor} / ${String(p.title).slice(0, 40)} / ${p.variants?.[0]?.price}`;
+    const kr = await context(base, 'localization=KR');
+    const none = await context(base, '');
+    return `OK   ${domain}  기본통화 ${meta.currency || '?'}  ${meta.published_products_count ?? '?'}개  ${meta.country || '?'}  | 한국 기준: ${kr} | 기본: ${none} | 예: ${p.vendor} / ${String(p.title).slice(0, 30)}`;
   } catch (e) {
     return `NO   ${domain}  ${e.cause?.code || e.name || e.message}`;
   }
