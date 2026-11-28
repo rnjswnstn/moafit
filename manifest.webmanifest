@@ -1,0 +1,17 @@
+{
+  "name": "MOAFIT",
+  "short_name": "MOAFIT",
+  "description": "여러 스토어의 옷을 한곳에 모아 내 사이즈와 취향 순으로 보여주는 개인 셀렉트샵",
+  "lang": "ko",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F6F3",
+  "theme_color": "#F6F6F3",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
